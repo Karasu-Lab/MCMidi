@@ -65,7 +65,7 @@ public class MidiClientCommand extends AbstractCommand {
             FileManager<?> manager = state.getMidiManager();
 
             try {
-                if (!manager.canLoad(filename)) {
+                if (manager.canLoad(filename)) {
                     source.sendError(Text.translatable("command.mcmidi.error.file_not_found", filename)
                             .copy().formatted(Formatting.RED));
                     return;

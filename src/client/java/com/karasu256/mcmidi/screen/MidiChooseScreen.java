@@ -89,7 +89,7 @@ public class MidiChooseScreen extends GameOptionsScreen implements IMidiScreen {
 
         if (selected != null) {
             try {
-                if (!resourceManager.canLoad(selected.path)) {
+                if (resourceManager.canLoad(selected.path)) {
                     Constants.LOGGER.info("File not found: {}", selected.path);
                     return;
                 }

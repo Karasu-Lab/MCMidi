@@ -78,6 +78,6 @@ public record FileManager<T extends IFileType>(T fileType) {
     }
 
     public boolean canLoad(String identifier) {
-        return resolveFile(identifier).isPresent();
+        return resolveFile(identifier).isEmpty();
     }
 }
