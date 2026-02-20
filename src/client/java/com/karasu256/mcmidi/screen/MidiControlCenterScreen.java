@@ -6,7 +6,6 @@ import com.karasu256.mcmidi.screen.ui.NodesTab;
 import com.karasu256.mcmidi.screen.ui.PianoTab;
 import com.karasu256.mcmidi.screen.ui.WaveformTab;
 import com.karasu256.mcmidi.screen.widget.*;
-import com.karasu256.mcmidi.config.ConfigManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gl.RenderPipelines;
@@ -55,7 +54,7 @@ public class MidiControlCenterScreen extends Screen {
     @Override
     protected void init() {
         this.tabBar = new TabBarWidget(this.tabManager, this.width);
-        
+
         DetailTab detailTab = new DetailTab(this);
         NodesTab nodesTab = new NodesTab();
         PianoTab pianoTab = new PianoTab();
@@ -66,9 +65,9 @@ public class MidiControlCenterScreen extends Screen {
         this.tabBar.addTab(pianoTab, pianoTab);
         this.tabBar.addTab(waveformTab, waveformTab);
 
-        ((TabBarWidget)this.tabBar).init(this.width, new ITabContent[]{detailTab, nodesTab, pianoTab, waveformTab});
-        this.tabNavigation = ((TabBarWidget)this.tabBar).getNavigation();
-        
+        ((TabBarWidget) this.tabBar).init(this.width, new ITabContent[]{detailTab, nodesTab, pianoTab, waveformTab});
+        this.tabNavigation = ((TabBarWidget) this.tabBar).getNavigation();
+
         this.addDrawableChild(this.tabNavigation);
 
         this.playbackControlWidget = new PlaybackControlWidget(this);
