@@ -1,5 +1,6 @@
 package com.karasu256.mcmidi.screen;
 
+import com.karasu256.karasunikilib.screen.widget.IControlWidget;
 import com.karasu256.mcmidi.client.MidiPlayerState;
 import com.karasu256.mcmidi.screen.ui.DetailTab;
 import com.karasu256.mcmidi.screen.ui.NodesTab;
@@ -34,7 +35,7 @@ public class MidiControlCenterScreen extends Screen {
     private final Screen parent;
     private final BiConsumer<MidiMessage, Long> midiListener = (message, time) -> this.onReceive(message);
     private TabNavigationWidget tabNavigation;
-    private ITabBar<ITabContent> tabBar;
+    private com.karasu256.karasunikilib.screen.widget.ITabBar<com.karasu256.karasunikilib.screen.widget.ITabContent> tabBar;
     private IControlWidget playbackControl;
     private PlaybackControlWidget playbackControlWidget;
 
@@ -65,7 +66,7 @@ public class MidiControlCenterScreen extends Screen {
         this.tabBar.addTab(pianoTab, pianoTab.getContent());
         this.tabBar.addTab(waveformTab, waveformTab.getContent());
 
-        ((TabBarWidget) this.tabBar).init(this.width, new ITabContent[]{detailTab, nodesTab, pianoTab, waveformTab});
+        ((TabBarWidget) this.tabBar).init(this.width, new com.karasu256.karasunikilib.screen.widget.ITabContent[]{detailTab, nodesTab, pianoTab, waveformTab});
         this.tabNavigation = ((TabBarWidget) this.tabBar).getNavigation();
 
         this.addDrawableChild(this.tabNavigation);

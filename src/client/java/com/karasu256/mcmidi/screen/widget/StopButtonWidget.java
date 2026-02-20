@@ -1,5 +1,6 @@
 package com.karasu256.mcmidi.screen.widget;
 
+import com.karasu256.karasunikilib.screen.widget.AbstractCustomWidget;
 import com.karasu256.mcmidi.api.midi.IMidiEngine;
 import com.karasu256.mcmidi.client.MidiPlayerState;
 import net.minecraft.text.Text;

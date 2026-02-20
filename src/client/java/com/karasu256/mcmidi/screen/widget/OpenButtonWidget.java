@@ -1,5 +1,6 @@
 package com.karasu256.mcmidi.screen.widget;
 
+import com.karasu256.karasunikilib.screen.widget.AbstractCustomWidget;
 import com.karasu256.mcmidi.screen.MidiChooseScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.Screen;

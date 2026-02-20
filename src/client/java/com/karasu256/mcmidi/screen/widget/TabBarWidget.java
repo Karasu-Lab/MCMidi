@@ -4,7 +4,7 @@ import net.minecraft.client.gui.tab.Tab;
 import net.minecraft.client.gui.tab.TabManager;
 import net.minecraft.client.gui.widget.TabNavigationWidget;
 
-public class TabBarWidget extends AbstractTabBar<ITabContent> {
+public class TabBarWidget extends com.karasu256.karasunikilib.screen.widget.AbstractTabBar<com.karasu256.karasunikilib.screen.widget.ITabContent> {
     private TabNavigationWidget navigation;
     private final TabManager tabManager;
 
@@ -12,9 +12,9 @@ public class TabBarWidget extends AbstractTabBar<ITabContent> {
         this.tabManager = tabManager;
     }
 
-    public void init(int width, ITabContent[] tabContents) {
+    public void init(int width, com.karasu256.karasunikilib.screen.widget.ITabContent[] tabContents) {
         TabNavigationWidget.Builder builder = TabNavigationWidget.builder(tabManager, width);
-        for (ITabContent content : tabContents) {
+        for (com.karasu256.karasunikilib.screen.widget.ITabContent content : tabContents) {
             if (content instanceof Tab tab) {
                 builder.tabs(tab);
             }
@@ -23,7 +23,7 @@ public class TabBarWidget extends AbstractTabBar<ITabContent> {
     }
 
     @Override
-    public void addTab(ITabContent tab, ITabContent content) {
+    public void addTab(com.karasu256.karasunikilib.screen.widget.ITabContent tab, com.karasu256.karasunikilib.screen.widget.ITabContent content) {
         super.addTab(tab, content);
     }
 

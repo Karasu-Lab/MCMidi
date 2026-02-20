@@ -1,5 +1,6 @@
 package com.karasu256.mcmidi.screen.widget;
 
+import com.karasu256.karasunikilib.screen.widget.IControlWidget;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.DirectionalLayoutWidget;
 
