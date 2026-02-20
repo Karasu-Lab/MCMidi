@@ -1,15 +1,15 @@
 package com.karasu256.mcmidi.api;
 
-import com.karasu256.mcmidi.Constants;
+import com.karasu256.mcmidi.config.ConfigManager;
 
 public class SoundFontFileManager extends AbstractResourceManager {
     @Override
     public String getDirectory() {
-        return Constants.SOUNDFONT_DIRECTORY;
+        return ConfigManager.getConfig().general.soundFontDirectory;
     }
 
     @Override
     public String[] getExtensions() {
-        return new String[]{Constants.SOUNDFONT_EXTENSION};
+        return new String[]{".sf2"};
     }
 }

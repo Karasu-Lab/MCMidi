@@ -21,9 +21,6 @@
 		"client": [
 			"com.karasu256.mcmidi.client.MCMidiClient"
 		],
-		"fabric-datagen": [
-			"com.karasu256.mcmidi.MCMidiDataGen"
-		],
 		"modmenu": [
 			"com.karasu256.mcmidi.client.MCMidiModMenuIntegration"
 		]

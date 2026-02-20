@@ -15,6 +15,8 @@ public class ModConfig implements ConfigData {
 
     public static class General {
         public String soundFontPath = "";
+        public String midiDirectory = Constants.DEFAULT_MIDI_DIRECTORY;
+        public String soundFontDirectory = Constants.DEFAULT_SOUNDFONT_DIRECTORY;
     }
 
     public static class Sound {

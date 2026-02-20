@@ -9,8 +9,8 @@ public final class Constants {
     public static final String MOD_ID = "mcmidi";
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-    public static final String MIDI_DIRECTORY = "midi/musics";
-    public static final String SOUNDFONT_DIRECTORY = "midi/soundfonts";
+    public static final String DEFAULT_MIDI_DIRECTORY = "midi/musics";
+    public static final String DEFAULT_SOUNDFONT_DIRECTORY = "midi/soundfonts";
 
     public static final String[] MIDI_EXTENSIONS = {".midi", ".mid"};
     public static final String SOUNDFONT_EXTENSION = ".sf2";
