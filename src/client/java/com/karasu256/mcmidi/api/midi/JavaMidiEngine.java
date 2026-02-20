@@ -2,9 +2,6 @@ package com.karasu256.mcmidi.api.midi;
 
 import com.karasu256.mcmidi.Constants;
 import com.karasu256.mcmidi.config.IConfigManager;
-import com.karasu256.mcmidi.impl.IFileType;
-import com.karasu256.mcmidi.client.MidiPlayerState;
-import com.karasu256.mcmidi.config.ConfigManager;
 import com.karasu256.mcmidi.config.ModConfig;
 
 import javax.sound.midi.*;
@@ -29,7 +26,7 @@ public class JavaMidiEngine extends AbstractMidiEngine {
     }
 
     @Override
-    public void loadSequence(byte[] data) throws Exception {
+    public void loadSequence(byte[] data) {
     }
 
     @Override
@@ -43,8 +40,8 @@ public class JavaMidiEngine extends AbstractMidiEngine {
                 ModConfig config = configManager.getConfig();
                 setSoundFontFromPath(config.general.soundFontPath);
 
-                MyReceiver myReceiver = new MyReceiver(this.synthesizer.getReceiver());
-                myReceiver.setListener(new Receiver() {
+                MidiReceiver midiReceiver = new MidiReceiver(this.synthesizer.getReceiver());
+                midiReceiver.setListener(new Receiver() {
                     @Override
                     public void send(MidiMessage message, long timeStamp) {
                         notifyListeners(message, timeStamp);
@@ -54,7 +51,7 @@ public class JavaMidiEngine extends AbstractMidiEngine {
                     public void close() {
                     }
                 });
-                this.sequencer.getTransmitter().setReceiver(myReceiver);
+                this.sequencer.getTransmitter().setReceiver(midiReceiver);
             }
 
             if (!this.sequencer.isRunning()) {

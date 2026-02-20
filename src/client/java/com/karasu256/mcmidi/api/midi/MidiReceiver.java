@@ -3,11 +3,11 @@ package com.karasu256.mcmidi.api.midi;
 import javax.sound.midi.MidiMessage;
 import javax.sound.midi.Receiver;
 
-public class MyReceiver implements Receiver {
+public class MidiReceiver implements Receiver {
     private final Receiver original;
     private Receiver listener;
 
-    public MyReceiver(Receiver original) {
+    public MidiReceiver(Receiver original) {
         this.original = original;
     }
 
