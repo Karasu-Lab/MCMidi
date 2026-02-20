@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(GameMenuScreen.class)
 public abstract class GameMenuScreenMixin extends AbstractParentElement implements Drawable {
     @Inject(method = "disconnect", at = @At("RETURN"))
-    private void close(CallbackInfo ci) {
+    private static void close(CallbackInfo ci) {
         var current = ExtendedMidi.getCurrent();
         if (current != null) {
             current.stopCurrent();
