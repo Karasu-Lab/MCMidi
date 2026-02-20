@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.0](https://github.com/Karasu-Lab/MCMidi/compare/v2.0.2...v2.1.0) (2026-02-20)
+
+
+### Features
+
+* moved packages to library ([40a81a0](https://github.com/Karasu-Lab/MCMidi/commit/40a81a035e9191f3e8ae9775dfdde7aeefeace35))
+
 ## [2.0.2](https://github.com/Karasu-Lab/MCMidi/compare/v2.0.1...v2.0.2) (2026-02-20)
 
 
