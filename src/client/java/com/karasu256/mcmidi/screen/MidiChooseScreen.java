@@ -2,9 +2,9 @@ package com.karasu256.mcmidi.screen;
 
 import com.karasu256.mcmidi.Constants;
 import com.karasu256.mcmidi.api.FileManager;
-import com.karasu256.mcmidi.api.midi.ExtendedMidi;
+import com.karasu256.mcmidi.api.midi.IMidiEngine;
+import com.karasu256.mcmidi.api.midi.JavaMidiEngine;
 import com.karasu256.mcmidi.client.MidiPlayerState;
-import com.karasu256.mcmidi.impl.IMidiPlayer;
 import com.karasu256.mcmidi.impl.IMidiScreen;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -47,7 +47,7 @@ public class MidiChooseScreen extends GameOptionsScreen implements IMidiScreen {
         this.layout.setFooterHeight(Constants.FOOTER_HEIGHT);
         this.resourceManager = MidiPlayerState.getInstance().getMidiManager();
 
-        IMidiPlayer current = MidiPlayerState.getInstance().getCurrentPlayer();
+        IMidiEngine current = MidiPlayerState.getInstance().getCurrentEngine();
         if (current != null) {
             current.stop();
             current.clear();
@@ -101,10 +101,10 @@ public class MidiChooseScreen extends GameOptionsScreen implements IMidiScreen {
                 MidiPlayerState state = MidiPlayerState.getInstance();
                 state.stopCurrent();
 
-                ExtendedMidi midi = new ExtendedMidi(data);
-                midi.setDisplayName(selected.path);
-                state.setCurrentPlayer(midi);
-                midi.play();
+                JavaMidiEngine engine = new JavaMidiEngine(data);
+                engine.setDisplayName(selected.path);
+                state.setCurrentEngine(engine);
+                engine.play();
             } catch (Exception e) {
                 Constants.LOGGER.error("Failed to play midi file: {}", selected.path);
                 Constants.LOGGER.error(e.getMessage());

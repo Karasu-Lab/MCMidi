@@ -102,7 +102,7 @@ public class MidiClientCommand extends AbstractCommand {
             if (!(context.getSource() instanceof FabricClientCommandSource source)) return;
 
             MidiPlayerState state = MidiPlayerState.getInstance();
-            if (state.getCurrentPlayer() == null) {
+            if (state.getCurrentEngine() == null) {
                 source.sendError(Text.translatable("command.mcmidi.error.no_midi")
                         .copy().formatted(Formatting.RED));
                 return;

@@ -1,7 +1,7 @@
 package com.karasu256.mcmidi.screen.widget;
 
+import com.karasu256.mcmidi.api.midi.IMidiEngine;
 import com.karasu256.mcmidi.client.MidiPlayerState;
-import com.karasu256.mcmidi.impl.IMidiPlayer;
 import net.minecraft.text.Text;
 
 public class StopButtonWidget extends AbstractCustomWidget {
@@ -16,7 +16,7 @@ public class StopButtonWidget extends AbstractCustomWidget {
 
     @Override
     public void refresh() {
-        IMidiPlayer player = MidiPlayerState.getInstance().getCurrentPlayer();
-        this.active = player != null;
+        IMidiEngine engine = MidiPlayerState.getInstance().getCurrentEngine();
+        this.active = engine != null;
     }
 }

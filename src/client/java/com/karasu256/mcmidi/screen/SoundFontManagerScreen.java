@@ -5,7 +5,7 @@ import com.karasu256.mcmidi.api.FileManager;
 import com.karasu256.mcmidi.client.MidiPlayerState;
 import com.karasu256.mcmidi.config.ConfigManager;
 import com.karasu256.mcmidi.config.ModConfig;
-import com.karasu256.mcmidi.impl.IMidiPlayer;
+import com.karasu256.mcmidi.api.midi.IMidiEngine;
 import com.karasu256.mcmidi.impl.IMidiScreen;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -38,7 +38,7 @@ public class SoundFontManagerScreen extends GameOptionsScreen implements IMidiSc
         this.config = ConfigManager.getConfig();
         this.resourceManager = MidiPlayerState.getInstance().getSoundFontManager();
 
-        IMidiPlayer current = MidiPlayerState.getInstance().getCurrentPlayer();
+        IMidiEngine current = MidiPlayerState.getInstance().getCurrentEngine();
         if (current != null) {
             current.stop();
             current.clear();

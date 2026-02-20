@@ -1,7 +1,7 @@
 package com.karasu256.mcmidi.screen.widget;
 
+import com.karasu256.mcmidi.api.midi.IMidiEngine;
 import com.karasu256.mcmidi.client.MidiPlayerState;
-import com.karasu256.mcmidi.impl.IMidiPlayer;
 import net.minecraft.text.Text;
 
 public class PlayPauseButtonWidget extends AbstractCustomWidget {
@@ -10,12 +10,12 @@ public class PlayPauseButtonWidget extends AbstractCustomWidget {
 
     public PlayPauseButtonWidget() {
         super(0, 0, 20, 20, PLAY_TEXT, button -> {
-            IMidiPlayer player = MidiPlayerState.getInstance().getCurrentPlayer();
-            if (player == null) return;
-            if (player.isPlaying()) {
-                player.pause();
+            IMidiEngine engine = MidiPlayerState.getInstance().getCurrentEngine();
+            if (engine == null) return;
+            if (engine.isPlaying()) {
+                engine.pause();
             } else {
-                player.play();
+                engine.play();
             }
             ((PlayPauseButtonWidget) button).refresh();
         });
@@ -23,9 +23,9 @@ public class PlayPauseButtonWidget extends AbstractCustomWidget {
 
     @Override
     public void refresh() {
-        IMidiPlayer player = MidiPlayerState.getInstance().getCurrentPlayer();
-        boolean hasMidi = player != null;
-        boolean isPlaying = hasMidi && player.isPlaying();
+        IMidiEngine engine = MidiPlayerState.getInstance().getCurrentEngine();
+        boolean hasMidi = engine != null;
+        boolean isPlaying = hasMidi && engine.isPlaying();
 
         this.active = hasMidi;
         this.setMessage(isPlaying ? PAUSE_TEXT : PLAY_TEXT);

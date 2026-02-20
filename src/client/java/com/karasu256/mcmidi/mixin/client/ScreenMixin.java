@@ -1,7 +1,7 @@
 package com.karasu256.mcmidi.mixin.client;
 
+import com.karasu256.mcmidi.api.midi.IMidiEngine;
 import com.karasu256.mcmidi.client.MidiPlayerState;
-import com.karasu256.mcmidi.impl.IMidiPlayer;
 import net.minecraft.client.gui.screen.Screen;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -13,7 +13,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(Screen.class)
 public abstract class ScreenMixin {
     @Unique
-    private IMidiPlayer mcmidi$current;
+    private IMidiEngine mcmidi$current;
     @Unique
     private long mcmidi$position = 0;
 
@@ -23,7 +23,7 @@ public abstract class ScreenMixin {
     @Inject(method = "init(Lnet/minecraft/client/MinecraftClient;II)V", at = @At("RETURN"))
     public void init(CallbackInfo ci) {
         if (shouldPause()) {
-            this.mcmidi$current = MidiPlayerState.getInstance().getCurrentPlayer();
+            this.mcmidi$current = MidiPlayerState.getInstance().getCurrentEngine();
 
             if (this.mcmidi$current != null) {
                 this.mcmidi$position = this.mcmidi$current.getPosition();

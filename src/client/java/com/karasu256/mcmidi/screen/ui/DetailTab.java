@@ -1,9 +1,9 @@
 package com.karasu256.mcmidi.screen.ui;
 
 import com.karasu256.mcmidi.Constants;
-import com.karasu256.mcmidi.api.midi.ExtendedMidi;
+import com.karasu256.mcmidi.api.midi.IMidiEngine;
+import com.karasu256.mcmidi.api.midi.JavaMidiEngine;
 import com.karasu256.mcmidi.client.MidiPlayerState;
-import com.karasu256.mcmidi.impl.IMidiPlayer;
 import com.karasu256.mcmidi.screen.MidiControlCenterScreen;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
@@ -39,10 +39,10 @@ public class DetailTab extends GridScreenTab {
     }
 
     public void onReceive(MidiMessage message, TextRenderer textRenderer) {
-        IMidiPlayer player = MidiPlayerState.getInstance().getCurrentPlayer();
-        if (!(player instanceof ExtendedMidi midi)) return;
+        IMidiEngine engine = MidiPlayerState.getInstance().getCurrentEngine();
+        if (!(engine instanceof JavaMidiEngine javaEngine)) return;
 
-        this.instruments = midi.getSynthesizer().getDefaultSoundbank().getInstruments();
+        this.instruments = javaEngine.getSynthesizer().getDefaultSoundbank().getInstruments();
 
         if (message instanceof ShortMessage shortMessage) {
             midiNoteMap.put(shortMessage.getChannel(), new MidiNote(shortMessage));
@@ -86,7 +86,7 @@ public class DetailTab extends GridScreenTab {
         @Override
         protected void renderWidget(DrawContext context, int mouseX, int mouseY, float delta) {
             TextRenderer textRenderer = parentScreen.getTextRenderer();
-            IMidiPlayer player = MidiPlayerState.getInstance().getCurrentPlayer();
+            IMidiEngine engine = MidiPlayerState.getInstance().getCurrentEngine();
 
             int baseX = this.getX();
             int baseY = this.getY();
@@ -103,9 +103,9 @@ public class DetailTab extends GridScreenTab {
             String pos = "0";
             String bpm = "";
 
-            if (player instanceof ExtendedMidi midi) {
-                pos = String.format("%.2f", (float) midi.getPosition() / 1_000_000);
-                bpm = String.format("%.2f", midi.getBPM());
+            if (engine != null) {
+                pos = String.format("%.2f", (float) engine.getPosition() / 1_000_000);
+                bpm = String.format("%.2f", engine.getBPM());
             }
 
             int columnSpacing = 20;

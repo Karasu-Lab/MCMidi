@@ -1,8 +1,7 @@
 package com.karasu256.mcmidi.screen.widget;
 
-import com.karasu256.mcmidi.api.midi.ExtendedMidi;
+import com.karasu256.mcmidi.api.midi.IMidiEngine;
 import com.karasu256.mcmidi.client.MidiPlayerState;
-import com.karasu256.mcmidi.impl.IMidiPlayer;
 import net.minecraft.client.gui.widget.SliderWidget;
 import net.minecraft.text.Text;
 
@@ -15,10 +14,10 @@ public class SeekBarWidget extends SliderWidget implements IControlWidget {
 
     @Override
     protected void updateMessage() {
-        IMidiPlayer player = MidiPlayerState.getInstance().getCurrentPlayer();
-        if (player instanceof ExtendedMidi midi) {
-            long posSec = midi.getPosition() / 1_000_000;
-            long lenSec = midi.getLength() / 1_000_000;
+        IMidiEngine engine = MidiPlayerState.getInstance().getCurrentEngine();
+        if (engine != null) {
+            long posSec = engine.getPosition() / 1_000_000;
+            long lenSec = engine.getLength() / 1_000_000;
             this.setMessage(Text.literal(String.format("%d:%02d / %d:%02d",
                     posSec / 60, posSec % 60, lenSec / 60, lenSec % 60)));
         } else {
@@ -28,11 +27,11 @@ public class SeekBarWidget extends SliderWidget implements IControlWidget {
 
     @Override
     protected void applyValue() {
-        IMidiPlayer player = MidiPlayerState.getInstance().getCurrentPlayer();
-        if (player instanceof ExtendedMidi midi) {
-            long length = midi.getLength();
+        IMidiEngine engine = MidiPlayerState.getInstance().getCurrentEngine();
+        if (engine != null) {
+            long length = engine.getLength();
             long newPos = (long) (this.value * length);
-            midi.setPosition(newPos);
+            engine.setPosition(newPos);
         }
     }
 
@@ -59,11 +58,11 @@ public class SeekBarWidget extends SliderWidget implements IControlWidget {
 
     @Override
     public void tick() {
-        IMidiPlayer player = MidiPlayerState.getInstance().getCurrentPlayer();
-        if (player instanceof ExtendedMidi midi) {
-            long length = midi.getLength();
+        IMidiEngine engine = MidiPlayerState.getInstance().getCurrentEngine();
+        if (engine != null) {
+            long length = engine.getLength();
             if (length > 0 && !userDragging) {
-                setProgress((double) midi.getPosition() / length);
+                setProgress((double) engine.getPosition() / length);
             }
         }
     }

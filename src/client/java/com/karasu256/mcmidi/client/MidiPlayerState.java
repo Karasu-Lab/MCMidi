@@ -4,8 +4,8 @@ import com.karasu256.mcmidi.Constants;
 import com.karasu256.mcmidi.api.FileManager;
 import com.karasu256.mcmidi.api.MidiFileType;
 import com.karasu256.mcmidi.api.SoundFontFileType;
-import com.karasu256.mcmidi.api.midi.ExtendedMidi;
-import com.karasu256.mcmidi.impl.IMidiPlayer;
+import com.karasu256.mcmidi.api.midi.IMidiEngine;
+import com.karasu256.mcmidi.api.midi.JavaMidiEngine;
 import org.jetbrains.annotations.Nullable;
 
 public class MidiPlayerState {
@@ -13,7 +13,7 @@ public class MidiPlayerState {
 
     private final FileManager<MidiFileType> midiManager = new FileManager<>(new MidiFileType());
     private final FileManager<SoundFontFileType> soundFontManager = new FileManager<>(new SoundFontFileType());
-    private @Nullable IMidiPlayer currentPlayer;
+    private @Nullable IMidiEngine currentEngine;
 
     private MidiPlayerState() {
     }
@@ -31,43 +31,43 @@ public class MidiPlayerState {
     }
 
     @Nullable
-    public IMidiPlayer getCurrentPlayer() {
-        return currentPlayer;
+    public IMidiEngine getCurrentEngine() {
+        return currentEngine;
     }
 
-    public void setCurrentPlayer(@Nullable IMidiPlayer player) {
-        this.currentPlayer = player;
+    public void setCurrentEngine(@Nullable IMidiEngine engine) {
+        this.currentEngine = engine;
     }
 
     public void playMidi(byte[] midiData) {
         stopCurrent();
         try {
-            ExtendedMidi midi = new ExtendedMidi(midiData);
-            this.currentPlayer = midi;
-            midi.play();
+            JavaMidiEngine engine = new JavaMidiEngine(midiData);
+            this.currentEngine = engine;
+            engine.play();
         } catch (Exception e) {
             Constants.LOGGER.error("Failed to play MIDI", e);
-            this.currentPlayer = null;
+            this.currentEngine = null;
         }
     }
 
     public void stopCurrent() {
-        if (currentPlayer != null) {
-            currentPlayer.stop();
+        if (currentEngine != null) {
+            currentEngine.stop();
         }
     }
 
     public void pauseCurrent() {
-        if (currentPlayer != null) {
-            currentPlayer.pause();
+        if (currentEngine != null) {
+            currentEngine.pause();
         }
     }
 
     public void clearAll() {
-        if (currentPlayer != null) {
-            currentPlayer.stop();
-            currentPlayer.clear();
+        if (currentEngine != null) {
+            currentEngine.stop();
+            currentEngine.clear();
         }
-        currentPlayer = null;
+        currentEngine = null;
     }
 }

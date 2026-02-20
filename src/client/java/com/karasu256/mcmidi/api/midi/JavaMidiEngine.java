@@ -3,36 +3,28 @@ package com.karasu256.mcmidi.api.midi;
 import com.karasu256.mcmidi.Constants;
 import com.karasu256.mcmidi.config.ConfigManager;
 import com.karasu256.mcmidi.config.ModConfig;
-import com.karasu256.mcmidi.impl.IMidiPlayer;
-import com.karasu256.mcmidi.screen.MidiControlCenterScreen;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.text.Text;
-import org.jetbrains.annotations.Nullable;
 
 import javax.sound.midi.*;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 
-public class ExtendedMidi implements IMidiPlayer {
+public class JavaMidiEngine extends AbstractMidiEngine {
     private final byte[] bytes;
     private final Sequencer sequencer;
     private final Sequence sequence;
     private final Synthesizer synthesizer;
-    private @Nullable String displayName;
     private long position;
 
-    public ExtendedMidi(byte[] bytes) throws Exception {
+    public JavaMidiEngine(byte[] bytes) throws Exception {
         this.bytes = bytes;
-
         this.sequencer = MidiSystem.getSequencer();
         this.sequence = MidiSystem.getSequence(new ByteArrayInputStream(this.bytes));
         this.synthesizer = MidiSystem.getSynthesizer();
     }
 
     @Override
-    public void load(byte[] midiData) {
-        // Data is loaded in constructor for javax.sound.midi compatibility
+    public void loadSequence(byte[] data) throws Exception {
     }
 
     @Override
@@ -44,15 +36,13 @@ public class ExtendedMidi implements IMidiPlayer {
                 this.sequencer.open();
 
                 ModConfig config = ConfigManager.getConfig();
-                loadSoundFontFromPath(config.general.soundFontPath);
+                setSoundFontFromPath(config.general.soundFontPath);
 
                 MyReceiver myReceiver = new MyReceiver(this.synthesizer.getReceiver());
                 myReceiver.setListener(new Receiver() {
                     @Override
                     public void send(MidiMessage message, long timeStamp) {
-                        if (MinecraftClient.getInstance().currentScreen instanceof MidiControlCenterScreen controlCenter) {
-                            controlCenter.onReceive(message);
-                        }
+                        notifyListeners(message, timeStamp);
                     }
 
                     @Override
@@ -98,8 +88,8 @@ public class ExtendedMidi implements IMidiPlayer {
     }
 
     @Override
-    public void setPosition(long position) {
-        this.position = position;
+    public void setPosition(long microseconds) {
+        this.position = microseconds;
         this.sequencer.setMicrosecondPosition(this.position);
     }
 
@@ -135,60 +125,7 @@ public class ExtendedMidi implements IMidiPlayer {
     }
 
     @Override
-    public void setLoopCount(int count) {
-        this.sequencer.setLoopCount(count);
-    }
-
-    @Override
-    public void clear() {
-        stop();
-        if (this.sequencer.isOpen()) {
-            this.sequencer.close();
-        }
-        if (this.synthesizer.isOpen()) {
-            this.synthesizer.close();
-        }
-    }
-
-    @Nullable
-    public String getDisplayName() {
-        return displayName;
-    }
-
-    public void setDisplayName(@Nullable String name) {
-        this.displayName = name;
-    }
-
-    public Text getPlayingPath() {
-        if (this.displayName == null) {
-            return Text.translatable("mcmidi.text.no_midi");
-        }
-        return Text.literal(this.displayName);
-    }
-
-    public void setStartTick(long tick) {
-        this.sequencer.setLoopStartPoint(tick);
-    }
-
-    public byte[] getBytes() {
-        return this.bytes;
-    }
-
-    public float getBPM() {
-        return this.sequencer.getTempoInBPM();
-    }
-
-    public Synthesizer getSynthesizer() {
-        return this.synthesizer;
-    }
-
-    public void updatePosition() {
-        if (this.sequencer.isOpen()) {
-            this.position = this.sequencer.getTickPosition();
-        }
-    }
-
-    private void loadSoundFontFromPath(String path) {
+    public void setSoundFontFromPath(String path) {
         if (path == null || path.isEmpty()) {
             useDefaultSoundFont();
             return;
@@ -212,6 +149,40 @@ public class ExtendedMidi implements IMidiPlayer {
             Constants.LOGGER.error("Failed to load soundfont: {}", path);
             useDefaultSoundFont();
         }
+    }
+
+    @Override
+    public void setLoopCount(int count) {
+        this.sequencer.setLoopCount(count);
+    }
+
+    @Override
+    public void clear() {
+        stop();
+        if (this.sequencer.isOpen()) {
+            this.sequencer.close();
+        }
+        if (this.synthesizer.isOpen()) {
+            this.synthesizer.close();
+        }
+    }
+
+    @Override
+    public byte[] getSequenceBytes() {
+        return this.bytes;
+    }
+
+    @Override
+    public float getBPM() {
+        return this.sequencer.getTempoInBPM();
+    }
+
+    public Synthesizer getSynthesizer() {
+        return this.synthesizer;
+    }
+
+    public void setStartTick(long tick) {
+        this.sequencer.setLoopStartPoint(tick);
     }
 
     private void useDefaultSoundFont() {

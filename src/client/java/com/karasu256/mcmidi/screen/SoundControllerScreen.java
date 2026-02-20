@@ -1,9 +1,8 @@
 package com.karasu256.mcmidi.screen;
 
 import com.karasu256.mcmidi.Constants;
-import com.karasu256.mcmidi.api.midi.ExtendedMidi;
+import com.karasu256.mcmidi.api.midi.IMidiEngine;
 import com.karasu256.mcmidi.client.MidiPlayerState;
-import com.karasu256.mcmidi.impl.IMidiPlayer;
 import com.karasu256.mcmidi.impl.IMidiScreen;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
@@ -32,7 +31,7 @@ public class SoundControllerScreen extends Screen implements IMidiScreen {
         this.playButton = this.addDrawableChild(ButtonWidget.builder(
                 Text.translatable("mcmidi.sound_controller.play"),
                 button -> {
-                    IMidiPlayer current = MidiPlayerState.getInstance().getCurrentPlayer();
+                    IMidiEngine current = MidiPlayerState.getInstance().getCurrentEngine();
                     if (current != null) {
                         current.play();
                     }
@@ -62,13 +61,14 @@ public class SoundControllerScreen extends Screen implements IMidiScreen {
         super.render(context, mouseX, mouseY, delta);
         context.drawCenteredTextWithShadow(this.textRenderer, this.title, this.width / 2, 6, Constants.TITLE_COLOR);
 
-        IMidiPlayer current = MidiPlayerState.getInstance().getCurrentPlayer();
-        if (current instanceof ExtendedMidi midi) {
+        IMidiEngine current = MidiPlayerState.getInstance().getCurrentEngine();
+        if (current != null) {
             Text infoText = Text.translatable("mcmidi.sound_controller.now_playing");
             context.drawText(this.textRenderer, infoText, (this.width / 2) - this.textRenderer.getWidth(infoText) / 2,
                     30, Constants.TITLE_COLOR, true);
 
-            Text midiName = midi.getPlayingPath();
+            String name = current.getDisplayName();
+            Text midiName = name != null ? Text.literal(name) : Text.translatable("mcmidi.text.no_midi");
             context.drawText(this.textRenderer, midiName, (this.width / 2) - this.textRenderer.getWidth(midiName) / 2,
                     45, Constants.TITLE_COLOR, true);
 
@@ -78,7 +78,7 @@ public class SoundControllerScreen extends Screen implements IMidiScreen {
             context.drawText(this.textRenderer, state, (this.width / 2) - this.textRenderer.getWidth(state) / 2, 60,
                     Constants.TITLE_COLOR, true);
 
-            Text bpmText = Text.literal("BPM: " + midi.getBPM());
+            Text bpmText = Text.literal("BPM: " + current.getBPM());
             context.drawText(this.textRenderer, bpmText, (this.width / 2) - this.textRenderer.getWidth(bpmText) / 2, 75,
                     Constants.TITLE_COLOR, true);
         } else {
@@ -91,7 +91,7 @@ public class SoundControllerScreen extends Screen implements IMidiScreen {
     }
 
     private void updateButtonStates() {
-        IMidiPlayer current = MidiPlayerState.getInstance().getCurrentPlayer();
+        IMidiEngine current = MidiPlayerState.getInstance().getCurrentEngine();
         boolean hasMidi = current != null;
         boolean isPlaying = hasMidi && current.isPlaying();
 
@@ -102,7 +102,7 @@ public class SoundControllerScreen extends Screen implements IMidiScreen {
 
     @Override
     public void playCurrent() {
-        IMidiPlayer current = MidiPlayerState.getInstance().getCurrentPlayer();
+        IMidiEngine current = MidiPlayerState.getInstance().getCurrentEngine();
         if (current != null && !current.isPlaying()) {
             current.play();
         }

@@ -1,8 +1,7 @@
 package com.karasu256.mcmidi.mixin.client;
 
-import com.karasu256.mcmidi.api.midi.ExtendedMidi;
+import com.karasu256.mcmidi.api.midi.IMidiEngine;
 import com.karasu256.mcmidi.client.MidiPlayerState;
-import com.karasu256.mcmidi.impl.IMidiPlayer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.hud.InGameHud;
 import net.minecraft.client.render.RenderTickCounter;
@@ -15,9 +14,9 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public class InGameHudMixin {
     @Inject(method = "render", at = @At("RETURN"))
     private void render(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
-        IMidiPlayer player = MidiPlayerState.getInstance().getCurrentPlayer();
-        if (player instanceof ExtendedMidi midi) {
-            midi.updatePosition();
+        IMidiEngine engine = MidiPlayerState.getInstance().getCurrentEngine();
+        if (engine != null) {
+            engine.getPosition();
         }
     }
 }
