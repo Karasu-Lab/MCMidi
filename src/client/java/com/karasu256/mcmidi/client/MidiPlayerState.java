@@ -6,6 +6,8 @@ import com.karasu256.mcmidi.api.MidiFileType;
 import com.karasu256.mcmidi.api.SoundFontFileType;
 import com.karasu256.mcmidi.api.midi.IMidiEngine;
 import com.karasu256.mcmidi.api.midi.JavaMidiEngine;
+import com.karasu256.mcmidi.config.ConfigManager;
+import com.karasu256.mcmidi.config.IConfigManager;
 import org.jetbrains.annotations.Nullable;
 
 public class MidiPlayerState {

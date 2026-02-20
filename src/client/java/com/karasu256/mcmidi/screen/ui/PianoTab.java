@@ -1,5 +1,6 @@
 package com.karasu256.mcmidi.screen.ui;
 
+import com.karasu256.mcmidi.screen.widget.AbstractTabContent;
 import net.minecraft.text.Text;
 
 public class PianoTab extends AbstractTabContent {
