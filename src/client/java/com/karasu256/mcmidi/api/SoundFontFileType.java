@@ -4,9 +4,15 @@ import com.karasu256.mcmidi.config.ConfigManager;
 import com.karasu256.mcmidi.impl.IFileType;
 
 public class SoundFontFileType implements IFileType {
+    private final IConfigManager configManager;
+
+    public SoundFontFileType(IConfigManager configManager) {
+        this.configManager = configManager;
+    }
+
     @Override
     public String getDirectory() {
-        return ConfigManager.getConfig().general.soundFontDirectory;
+        return configManager.getConfig().general.soundFontDirectory;
     }
 
     @Override

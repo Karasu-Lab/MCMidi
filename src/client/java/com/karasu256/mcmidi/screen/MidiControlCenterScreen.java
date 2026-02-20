@@ -5,8 +5,7 @@ import com.karasu256.mcmidi.screen.ui.DetailTab;
 import com.karasu256.mcmidi.screen.ui.NodesTab;
 import com.karasu256.mcmidi.screen.ui.PianoTab;
 import com.karasu256.mcmidi.screen.ui.WaveformTab;
-import com.karasu256.mcmidi.screen.widget.IControlWidget;
-import com.karasu256.mcmidi.screen.widget.PlaybackControlWidget;
+import com.karasu256.mcmidi.screen.widget.*;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gl.RenderPipelines;
@@ -34,6 +33,7 @@ public class MidiControlCenterScreen extends Screen {
     );
     private final Screen parent;
     private TabNavigationWidget tabNavigation;
+    private ITabBar<Tab> tabBar;
     private IControlWidget playbackControl;
     private PlaybackControlWidget playbackControlWidget;
 
@@ -54,14 +54,22 @@ public class MidiControlCenterScreen extends Screen {
 
     @Override
     protected void init() {
-        this.tabNavigation = TabNavigationWidget.builder(this.tabManager, this.width)
-                .tabs(new Tab[]{
-                        new DetailTab(this),
-                        new NodesTab(),
-                        new PianoTab(),
-                        new WaveformTab()
-                })
-                .build();
+        this.tabBar = new TabBarWidget(this.tabManager, this.width);
+        
+        DetailTab detailTab = new DetailTab(this);
+        NodesTab nodesTab = new NodesTab();
+        PianoTab pianoTab = new PianoTab();
+        WaveformTab waveformTab = new WaveformTab();
+
+        this.tabBar.addTab(detailTab, detailTab);
+        this.tabBar.addTab(nodesTab, nodesTab);
+        this.tabBar.addTab(pianoTab, pianoTab);
+        this.tabBar.addTab(waveformTab, waveformTab);
+
+        this.tabNavigation = ((TabBarWidget)this.tabBar).getNavigation();
+        this.tabNavigation.setWidth(this.width);
+        this.tabNavigation.init();
+        
         this.addDrawableChild(this.tabNavigation);
 
         this.playbackControlWidget = new PlaybackControlWidget(this);
@@ -107,6 +115,9 @@ public class MidiControlCenterScreen extends Screen {
     @Override
     public void tick() {
         super.tick();
+        if (this.tabBar != null) {
+            this.tabBar.tick();
+        }
         if (this.playbackControl != null) {
             this.playbackControl.tick();
             this.playbackControl.refresh();

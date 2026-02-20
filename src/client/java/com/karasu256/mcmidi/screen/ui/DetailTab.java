@@ -21,7 +21,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
-public class DetailTab extends GridScreenTab {
+public class DetailTab extends AbstractTabContent {
     private static final Text TITLE = Text.translatable("mcmidi.tab.detail");
 
     private final MidiControlCenterScreen parentScreen;

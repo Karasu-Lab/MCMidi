@@ -14,10 +14,12 @@ public class JavaMidiEngine extends AbstractMidiEngine {
     private final Sequencer sequencer;
     private final Sequence sequence;
     private final Synthesizer synthesizer;
+    private final IConfigManager configManager;
     private long position;
 
-    public JavaMidiEngine(byte[] bytes) throws Exception {
+    public JavaMidiEngine(byte[] bytes, IConfigManager configManager) throws Exception {
         this.bytes = bytes;
+        this.configManager = configManager;
         this.sequencer = MidiSystem.getSequencer();
         this.sequence = MidiSystem.getSequence(new ByteArrayInputStream(this.bytes));
         this.synthesizer = MidiSystem.getSynthesizer();
@@ -35,7 +37,7 @@ public class JavaMidiEngine extends AbstractMidiEngine {
                 this.synthesizer.open();
                 this.sequencer.open();
 
-                ModConfig config = ConfigManager.getConfig();
+                ModConfig config = configManager.getConfig();
                 setSoundFontFromPath(config.general.soundFontPath);
 
                 MyReceiver myReceiver = new MyReceiver(this.synthesizer.getReceiver());

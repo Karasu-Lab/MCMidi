@@ -9,13 +9,17 @@ import com.karasu256.mcmidi.api.midi.JavaMidiEngine;
 import org.jetbrains.annotations.Nullable;
 
 public class MidiPlayerState {
-    private static final MidiPlayerState INSTANCE = new MidiPlayerState();
+    private static final MidiPlayerState INSTANCE = new MidiPlayerState(ConfigManager.getInstance());
 
-    private final FileManager<MidiFileType> midiManager = new FileManager<>(new MidiFileType());
-    private final FileManager<SoundFontFileType> soundFontManager = new FileManager<>(new SoundFontFileType());
+    private final IConfigManager configManager;
+    private final FileManager<MidiFileType> midiManager;
+    private final FileManager<SoundFontFileType> soundFontManager;
     private @Nullable IMidiEngine currentEngine;
 
-    private MidiPlayerState() {
+    private MidiPlayerState(IConfigManager configManager) {
+        this.configManager = configManager;
+        this.midiManager = new FileManager<>(new MidiFileType(configManager));
+        this.soundFontManager = new FileManager<>(new SoundFontFileType(configManager));
     }
 
     public static MidiPlayerState getInstance() {
@@ -63,7 +67,7 @@ public class MidiPlayerState {
     public void playMidi(byte[] midiData) {
         stopCurrent();
         try {
-            JavaMidiEngine engine = new JavaMidiEngine(midiData);
+            JavaMidiEngine engine = new JavaMidiEngine(midiData, configManager);
             this.setCurrentEngine(engine);
             engine.play();
         } catch (Exception e) {

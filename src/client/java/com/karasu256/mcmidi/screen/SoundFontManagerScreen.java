@@ -28,14 +28,16 @@ import java.util.Optional;
 
 @Environment(EnvType.CLIENT)
 public class SoundFontManagerScreen extends GameOptionsScreen implements IMidiScreen {
+    private final IConfigManager configManager;
     private final ModConfig config;
     private final FileManager<?> resourceManager;
     private SoundFontOptionListWidget soundFontOptionListWidget;
 
-    public SoundFontManagerScreen(Screen parent) {
+    public SoundFontManagerScreen(Screen parent, IConfigManager configManager) {
         super(parent, MinecraftClient.getInstance().options, Text.translatable("mcmidi.options.title"));
         this.layout.setFooterHeight(Constants.FOOTER_HEIGHT);
-        this.config = ConfigManager.getConfig();
+        this.configManager = configManager;
+        this.config = configManager.getConfig();
         this.resourceManager = MidiPlayerState.getInstance().getSoundFontManager();
 
         IMidiEngine current = MidiPlayerState.getInstance().getCurrentEngine();
@@ -90,7 +92,7 @@ public class SoundFontManagerScreen extends GameOptionsScreen implements IMidiSc
             }
         }
 
-        ConfigManager.getProvider().save(config);
+        configManager.getProvider().save(config);
         this.close();
     }
 

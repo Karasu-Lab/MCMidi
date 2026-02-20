@@ -101,7 +101,7 @@ public class MidiChooseScreen extends GameOptionsScreen implements IMidiScreen {
                 MidiPlayerState state = MidiPlayerState.getInstance();
                 state.stopCurrent();
 
-                JavaMidiEngine engine = new JavaMidiEngine(data);
+                JavaMidiEngine engine = new JavaMidiEngine(data, ConfigManager.getInstance());
                 engine.setDisplayName(selected.path);
                 state.setCurrentEngine(engine);
                 engine.play();

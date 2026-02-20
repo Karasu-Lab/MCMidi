@@ -10,7 +10,7 @@ public class OpenSoundFontButtonWidget extends AbstractCustomWidget {
 
     public OpenSoundFontButtonWidget(Screen parentScreen) {
         super(0, 0, 70, 20, LABEL, button -> {
-            MinecraftClient.getInstance().setScreen(new SoundFontManagerScreen(parentScreen));
+            MinecraftClient.getInstance().setScreen(new SoundFontManagerScreen(parentScreen, ConfigManager.getInstance()));
         });
     }
 }

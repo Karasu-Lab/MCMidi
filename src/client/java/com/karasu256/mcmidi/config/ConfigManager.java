@@ -5,19 +5,30 @@ import com.karasu256.karasunikilib.config.IConfigProvider;
 import com.karasu256.mcmidi.config.impl.AutoConfigFieldsAdapter;
 import com.karasu256.mcmidi.config.impl.AutoConfigProvider;
 
-public class ConfigManager {
+public class ConfigManager implements IConfigManager {
     private static final AutoConfigProvider<ModConfig> PROVIDER = new AutoConfigProvider<>(ModConfig.class);
     private static final IConfigFieldsAdapter FIELDS_ADAPTER = new AutoConfigFieldsAdapter();
+    private static final ConfigManager INSTANCE = new ConfigManager();
 
-    public static ModConfig getConfig() {
+    private ConfigManager() {
+    }
+
+    public static ConfigManager getInstance() {
+        return INSTANCE;
+    }
+
+    @Override
+    public ModConfig getConfig() {
         return PROVIDER.load();
     }
 
-    public static IConfigProvider<ModConfig> getProvider() {
+    @Override
+    public IConfigProvider<ModConfig> getProvider() {
         return PROVIDER;
     }
 
-    public static IConfigFieldsAdapter getFieldsAdapter() {
+    @Override
+    public IConfigFieldsAdapter getFieldsAdapter() {
         return FIELDS_ADAPTER;
     }
 }

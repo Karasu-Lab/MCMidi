@@ -4,9 +4,15 @@ import com.karasu256.mcmidi.config.ConfigManager;
 import com.karasu256.mcmidi.impl.IFileType;
 
 public class MidiFileType implements IFileType {
+    private final IConfigManager configManager;
+
+    public MidiFileType(IConfigManager configManager) {
+        this.configManager = configManager;
+    }
+
     @Override
     public String getDirectory() {
-        return ConfigManager.getConfig().general.midiDirectory;
+        return configManager.getConfig().general.midiDirectory;
     }
 
     @Override

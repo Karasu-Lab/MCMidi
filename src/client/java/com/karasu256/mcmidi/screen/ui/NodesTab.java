@@ -3,7 +3,7 @@ package com.karasu256.mcmidi.screen.ui;
 import net.minecraft.client.gui.tab.GridScreenTab;
 import net.minecraft.text.Text;
 
-public class NodesTab extends GridScreenTab {
+public class NodesTab extends AbstractTabContent {
     public NodesTab() {
         super(Text.translatable("mcmidi.tab.nodes"));
     }

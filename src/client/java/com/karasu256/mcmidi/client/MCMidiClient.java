@@ -23,7 +23,7 @@ public class MCMidiClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        ConfigManager.getProvider().register();
+        ConfigManager.getInstance().getProvider().register();
         ModClientNetworking.registerS2CPackets();
 
         ClientCommandRegistrationCallback.EVENT.register(MidiClientCommand::register);
