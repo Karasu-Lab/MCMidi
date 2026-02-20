@@ -14,6 +14,7 @@ public class MidiPlayerState {
     private final IConfigManager configManager;
     private final FileManager<MidiFileType> midiManager;
     private final FileManager<SoundFontFileType> soundFontManager;
+    private final java.util.List<java.util.function.BiConsumer<javax.sound.midi.MidiMessage, Long>> globalListeners = new java.util.ArrayList<>();
     private @Nullable IMidiEngine currentEngine;
 
     private MidiPlayerState(IConfigManager configManager) {
@@ -47,8 +48,6 @@ public class MidiPlayerState {
             }
         }
     }
-
-    private final java.util.List<java.util.function.BiConsumer<javax.sound.midi.MidiMessage, Long>> globalListeners = new java.util.ArrayList<>();
 
     public void registerGlobalListener(java.util.function.BiConsumer<javax.sound.midi.MidiMessage, Long> listener) {
         this.globalListeners.add(listener);

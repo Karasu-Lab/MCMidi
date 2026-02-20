@@ -7,7 +7,6 @@ import com.karasu256.mcmidi.client.MidiPlayerState;
 import com.karasu256.mcmidi.screen.MidiControlCenterScreen;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.tab.GridScreenTab;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.text.Style;
 import net.minecraft.text.Text;

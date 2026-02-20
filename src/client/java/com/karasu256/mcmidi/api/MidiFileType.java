@@ -1,6 +1,5 @@
 package com.karasu256.mcmidi.api;
 
-import com.karasu256.mcmidi.config.ConfigManager;
 import com.karasu256.mcmidi.impl.IFileType;
 
 public class MidiFileType implements IFileType {

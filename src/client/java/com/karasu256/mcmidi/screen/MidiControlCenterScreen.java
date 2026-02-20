@@ -5,7 +5,10 @@ import com.karasu256.mcmidi.screen.ui.DetailTab;
 import com.karasu256.mcmidi.screen.ui.NodesTab;
 import com.karasu256.mcmidi.screen.ui.PianoTab;
 import com.karasu256.mcmidi.screen.ui.WaveformTab;
-import com.karasu256.mcmidi.screen.widget.*;
+import com.karasu256.mcmidi.screen.widget.IControlWidget;
+import com.karasu256.mcmidi.screen.widget.ITabBar;
+import com.karasu256.mcmidi.screen.widget.PlaybackControlWidget;
+import com.karasu256.mcmidi.screen.widget.TabBarWidget;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gl.RenderPipelines;
@@ -32,12 +35,11 @@ public class MidiControlCenterScreen extends Screen {
             child -> this.remove(child)
     );
     private final Screen parent;
+    private final BiConsumer<MidiMessage, Long> midiListener = (message, time) -> this.onReceive(message);
     private TabNavigationWidget tabNavigation;
     private ITabBar<Tab> tabBar;
     private IControlWidget playbackControl;
     private PlaybackControlWidget playbackControlWidget;
-
-    private final BiConsumer<MidiMessage, Long> midiListener = (message, time) -> this.onReceive(message);
 
     public MidiControlCenterScreen() {
         this(MinecraftClient.getInstance().currentScreen);
@@ -55,7 +57,7 @@ public class MidiControlCenterScreen extends Screen {
     @Override
     protected void init() {
         this.tabBar = new TabBarWidget(this.tabManager, this.width);
-        
+
         DetailTab detailTab = new DetailTab(this);
         NodesTab nodesTab = new NodesTab();
         PianoTab pianoTab = new PianoTab();
@@ -66,10 +68,10 @@ public class MidiControlCenterScreen extends Screen {
         this.tabBar.addTab(pianoTab, pianoTab);
         this.tabBar.addTab(waveformTab, waveformTab);
 
-        this.tabNavigation = ((TabBarWidget)this.tabBar).getNavigation();
+        this.tabNavigation = ((TabBarWidget) this.tabBar).getNavigation();
         this.tabNavigation.setWidth(this.width);
         this.tabNavigation.init();
-        
+
         this.addDrawableChild(this.tabNavigation);
 
         this.playbackControlWidget = new PlaybackControlWidget(this);
