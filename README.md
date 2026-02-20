@@ -42,7 +42,7 @@ This mod requires the following libraries:
 ## Contribution
 Contributions are welcome! If you have suggestions, bug reports, or would like to submit a pull request, please follow these steps:
 
-1. Fork this repository and create your branch from `master`.
+1. Fork this repository and create your branch from `main`.
 2. Make your changes with clear commit messages.
 3. Ensure your code builds and passes any existing checks.
 4. Submit a pull request with a description of your changes.
