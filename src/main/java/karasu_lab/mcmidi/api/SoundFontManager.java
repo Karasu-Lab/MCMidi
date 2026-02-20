@@ -11,7 +11,10 @@ import net.minecraft.nbt.NbtHelper;
 import net.minecraft.registry.RegistryEntryLookup;
 import net.minecraft.resource.ResourceFinder;
 import net.minecraft.resource.ResourceManager;
-import net.minecraft.util.*;
+import net.minecraft.util.FixedBufferInputStream;
+import net.minecraft.util.Identifier;
+import net.minecraft.util.InvalidIdentifierException;
+import net.minecraft.util.WorldSavePath;
 import net.minecraft.world.level.storage.LevelStorage;
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -31,15 +34,15 @@ public class SoundFontManager {
     private static final Logger LOGGER = LoggerFactory.getLogger(SoundFontManager.class);
     private static final String SOUNDFONT_DIRECTORY = "soundfont";
     private static final String SOUNDFONT_EXTENTION = ".sf2";
+    private static final ResourceFinder SOUNDFONT_NBT_RESOURCE_FINDER = new ResourceFinder(SOUNDFONT_DIRECTORY, SOUNDFONT_EXTENTION);
     private final Map<Identifier, Optional<Sequence>> midis = Maps.newConcurrentMap();
     private final DataFixer dataFixer;
-    private ResourceManager resourceManager;
     private final Path generatedPath;
     private final List<Provider> providers;
     private final RegistryEntryLookup<Block> blockLookup;
-    private static final ResourceFinder SOUNDFONT_NBT_RESOURCE_FINDER = new ResourceFinder(SOUNDFONT_DIRECTORY, SOUNDFONT_EXTENTION);
+    private final ResourceManager resourceManager;
 
-    public SoundFontManager(ResourceManager resourceManager, LevelStorage.Session session, DataFixer dataFixer, RegistryEntryLookup<Block> blockLookup){
+    public SoundFontManager(ResourceManager resourceManager, LevelStorage.Session session, DataFixer dataFixer, RegistryEntryLookup<Block> blockLookup) {
         this.resourceManager = resourceManager;
         this.dataFixer = dataFixer;
         this.generatedPath = session.getDirectory(WorldSavePath.GENERATED).normalize();
@@ -60,19 +63,19 @@ public class SoundFontManager {
     }
 
     public Stream<Identifier> streamSoundFontsFromGameTestFile() {
-        if (!Files.isDirectory(this.generatedPath, new LinkOption[0])) {
+        if (!Files.isDirectory(this.generatedPath)) {
             return Stream.empty();
         } else {
             try {
                 List<Identifier> list = new ArrayList<>();
                 DirectoryStream<Path> directoryStream = Files.newDirectoryStream(this.generatedPath, (pathx) -> {
-                    return Files.isDirectory(pathx, new LinkOption[0]);
+                    return Files.isDirectory(pathx);
                 });
 
                 try {
                     Iterator<Path> pathIterator = directoryStream.iterator();
 
-                    while(pathIterator.hasNext()) {
+                    while (pathIterator.hasNext()) {
                         Path path = pathIterator.next();
                         String string = path.getFileName().toString();
                         Path path2 = path.resolve(SOUNDFONT_DIRECTORY);
@@ -112,19 +115,19 @@ public class SoundFontManager {
     }
 
     public Stream<Identifier> streamSoundFontsFromFile() {
-        if (!Files.isDirectory(this.generatedPath, new LinkOption[0])) {
+        if (!Files.isDirectory(this.generatedPath)) {
             return Stream.empty();
         } else {
             try {
                 List<Identifier> list = new ArrayList<>();
                 DirectoryStream<Path> directoryStream = Files.newDirectoryStream(this.generatedPath, (pathx) -> {
-                    return Files.isDirectory(pathx, new LinkOption[0]);
+                    return Files.isDirectory(pathx);
                 });
 
                 try {
                     Iterator<Path> var3 = directoryStream.iterator();
 
-                    while(var3.hasNext()) {
+                    while (var3.hasNext()) {
                         Path path = var3.next();
                         String string = path.getFileName().toString();
                         Path path2 = path.resolve(SOUNDFONT_DIRECTORY);
@@ -163,12 +166,12 @@ public class SoundFontManager {
         try {
             Stream<Path> stream = Files.find(directory, Integer.MAX_VALUE, (path, attributes) -> {
                 return attributes.isRegularFile() && path.toString().endsWith(fileExtension);
-            }, new FileVisitOption[0]);
+            });
 
             try {
                 stream.forEach((path) -> {
                     try {
-                        idConsumer.accept(Identifier.of(namespace, (String)function.apply(this.toRelativePath(directory, path))));
+                        idConsumer.accept(Identifier.of(namespace, function.apply(this.toRelativePath(directory, path))));
                     } catch (InvalidIdentifierException exception) {
                         LOGGER.error("Invalid location while listing folder {} contents", directory, exception);
                     }
@@ -203,7 +206,7 @@ public class SoundFontManager {
     }
 
     public Optional<File> loadSoundFontFromSnbt(Identifier id, Path path) {
-        if (!Files.isDirectory(path, new LinkOption[0])) {
+        if (!Files.isDirectory(path)) {
             return Optional.empty();
         } else {
             Path path2 = PathUtil.getResourcePath(path, id.getPath(), ".snbt");
@@ -243,12 +246,13 @@ public class SoundFontManager {
 
     public File createSoundFont(NbtCompound nbtCompound) throws InvalidMidiDataException, IOException {
         File tempFile = File.createTempFile(SOUNDFONT_DIRECTORY, SOUNDFONT_EXTENTION);
-        Files.write(tempFile.toPath(), nbtCompound.getByteArray(SOUNDFONT_DIRECTORY));
+        byte[] bytes = nbtCompound.getByteArray(SOUNDFONT_DIRECTORY).orElse(new byte[0]);
+        Files.write(tempFile.toPath(), bytes);
         return tempFile;
     }
 
     public Optional<File> loadSoundFontFromFile(Identifier id) {
-        if (!Files.isDirectory(this.generatedPath, new LinkOption[0])) {
+        if (!Files.isDirectory(this.generatedPath)) {
             return Optional.empty();
         } else {
             Path path = this.getSoundFontPath(id, SOUNDFONT_EXTENTION);
@@ -314,7 +318,7 @@ public class SoundFontManager {
 
     public Path getSoundFontPath(Identifier id, String extension) {
         if (id.getPath().contains("//")) {
-            throw new InvalidIdentifierException("Invalid resource path: " + String.valueOf(id));
+            throw new InvalidIdentifierException("Invalid resource path: " + id);
         } else {
             try {
                 Path path = this.generatedPath.resolve(id.getNamespace());
@@ -322,10 +326,10 @@ public class SoundFontManager {
                 if (path2.startsWith(this.generatedPath) && PathUtil.isNormal(path2) && PathUtil.isAllowedName(path2)) {
                     return path2;
                 } else {
-                    throw new InvalidIdentifierException("Invalid resource path: " + String.valueOf(path2));
+                    throw new InvalidIdentifierException("Invalid resource path: " + path2);
                 }
             } catch (InvalidPathException exception) {
-                throw new InvalidIdentifierException("Invalid resource path: " + String.valueOf(id), exception);
+                throw new InvalidIdentifierException("Invalid resource path: " + id, exception);
             }
         }
     }
@@ -335,7 +339,7 @@ public class SoundFontManager {
         InputStream open() throws IOException;
     }
 
-    static record Provider(Function<Identifier, Optional<File>> loader, Supplier<Stream<Identifier>> lister) {
+    record Provider(Function<Identifier, Optional<File>> loader, Supplier<Stream<Identifier>> lister) {
         Provider(Function<Identifier, Optional<File>> loader, Supplier<Stream<Identifier>> lister) {
             this.loader = loader;
             this.lister = lister;

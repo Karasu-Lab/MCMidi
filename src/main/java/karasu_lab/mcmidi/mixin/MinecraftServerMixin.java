@@ -26,15 +26,19 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.net.Proxy;
 
 @Mixin(MinecraftServer.class)
-public abstract class MinecraftServerMixin{
-	@Shadow @Final protected SaveProperties saveProperties;
-	@Shadow @Final private CombinedDynamicRegistries<ServerDynamicRegistryType> combinedDynamicRegistries;
+public abstract class MinecraftServerMixin {
+    @Shadow
+    @Final
+    protected SaveProperties saveProperties;
+    @Shadow
+    @Final
+    private CombinedDynamicRegistries<ServerDynamicRegistryType> combinedDynamicRegistries;
 
-	@Inject(at = @At(value = "TAIL"), method = "<init>")
-	private void init(Thread serverThread, LevelStorage.Session session, ResourcePackManager resourcePackManager, SaveLoader saveLoader, Proxy proxy, DataFixer dataFixer, ApiServices apiServices, WorldGenerationProgressListenerFactory worldGenerationProgressListenerFactory, CallbackInfo ci) {
-		RegistryEntryLookup<Block> registryEntryLookup = this.combinedDynamicRegistries.getCombinedRegistryManager().get(RegistryKeys.BLOCK).getReadOnlyWrapper().withFeatureFilter(this.saveProperties.getEnabledFeatures());
-		MCMidi.midiManager = new MidiManager(saveLoader.resourceManager(), session, dataFixer, registryEntryLookup);
-		MCMidi.soundFontManager = new SoundFontManager(saveLoader.resourceManager(), session, dataFixer, registryEntryLookup);
+    @Inject(at = @At(value = "TAIL"), method = "<init>")
+    private void init(Thread serverThread, LevelStorage.Session session, ResourcePackManager resourcePackManager, SaveLoader saveLoader, Proxy proxy, DataFixer dataFixer, ApiServices apiServices, WorldGenerationProgressListenerFactory worldGenerationProgressListenerFactory, CallbackInfo ci) {
+        RegistryEntryLookup<Block> registryEntryLookup = this.combinedDynamicRegistries.getCombinedRegistryManager().getOrThrow(RegistryKeys.BLOCK).withFeatureFilter(this.saveProperties.getEnabledFeatures());
+        MCMidi.midiManager = new MidiManager(saveLoader.resourceManager(), session, dataFixer, registryEntryLookup);
+        MCMidi.soundFontManager = new SoundFontManager(saveLoader.resourceManager(), session, dataFixer, registryEntryLookup);
 
-	}
+    }
 }

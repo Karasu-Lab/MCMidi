@@ -21,18 +21,21 @@ import java.util.function.Supplier;
 
 @Mixin(OptionsScreen.class)
 public abstract class OptionsScreenMixin extends Screen {
+    @Shadow
+    @Final
+    private static Text LANGUAGE_TEXT;
+    @Unique
+    private final Text MCMIDI_TEXT = Text.translatable("mcmidi.options.title");
+    @Shadow
+    @Final
+    private GameOptions settings;
+
     protected OptionsScreenMixin(Text title) {
         super(title);
     }
 
-    @Shadow protected abstract ButtonWidget createButton(Text message, Supplier<Screen> screenSupplier);
-
-    @Shadow @Final private static Text LANGUAGE_TEXT;
-
-    @Shadow @Final private GameOptions settings;
-
-    @Unique
-    private final Text MCMIDI_TEXT = Text.translatable("mcmidi.options.title");
+    @Shadow
+    protected abstract ButtonWidget createButton(Text message, Supplier<Screen> screenSupplier);
 
     @Redirect(method = "init", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/widget/GridWidget$Adder;add(Lnet/minecraft/client/gui/widget/Widget;)Lnet/minecraft/client/gui/widget/Widget;", ordinal = 4))
     private <T extends Widget> T init(GridWidget.Adder adder, T widget) {

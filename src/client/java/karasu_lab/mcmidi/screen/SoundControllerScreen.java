@@ -1,7 +1,5 @@
 package karasu_lab.mcmidi.screen;
 
-import com.mojang.authlib.minecraft.client.MinecraftClient;
-
 import karasu_lab.mcmidi.api.midi.ExtendedMidi;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;

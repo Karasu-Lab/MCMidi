@@ -18,34 +18,34 @@ import javax.sound.midi.MidiUnavailableException;
 import javax.sound.midi.Sequencer;
 
 public class MCMidiClient implements ClientModInitializer {
-	public static final Logger LOGGER = LoggerFactory.getLogger(MCMidiClient.class);
-	public static Sequencer CLIENT_SEQUENCER;
+    public static final Logger LOGGER = LoggerFactory.getLogger(MCMidiClient.class);
+    public static Sequencer CLIENT_SEQUENCER;
 
-	KeyBinding keyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-			"key.mcmidi.open",
-			InputUtil.Type.KEYSYM,
-			GLFW.GLFW_KEY_COMMA,
-			"category.mcmidi.keybinds"));
+    KeyBinding keyBinding = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+            "key.mcmidi.open",
+            InputUtil.Type.KEYSYM,
+            GLFW.GLFW_KEY_COMMA,
+            "category.mcmidi.keybinds"));
 
-	@Override
-	public void onInitializeClient() {
-		ModClientNetworking.registerS2CPackets();
+    @Override
+    public void onInitializeClient() {
+        ModClientNetworking.registerS2CPackets();
 
-		try {
-			CLIENT_SEQUENCER = MidiSystem.getSequencer(false);
-		} catch (MidiUnavailableException ignored) {
+        try {
+            CLIENT_SEQUENCER = MidiSystem.getSequencer(false);
+        } catch (MidiUnavailableException ignored) {
 
-		}
+        }
 
-		ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> {
-			ExtendedMidi.clearAll();
-			LOGGER.info("World joined - clearing all MIDIs");
-		});
+        ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> {
+            ExtendedMidi.clearAll();
+            LOGGER.info("World joined - clearing all MIDIs");
+        });
 
-		ClientTickEvents.END_CLIENT_TICK.register(client -> {
-			while (keyBinding.wasPressed()) {
-				client.setScreen(new MidiControlCenter());
-			}
-		});
-	}
+        ClientTickEvents.END_CLIENT_TICK.register(client -> {
+            while (keyBinding.wasPressed()) {
+                client.setScreen(new MidiControlCenter());
+            }
+        });
+    }
 }

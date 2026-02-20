@@ -1,9 +1,5 @@
 package karasu_lab.mcmidi.api;
 
-import javax.sound.midi.*;
-import java.io.File;
-import java.io.IOException;
-
 public class MidiPlayer {
     public void play() {
 

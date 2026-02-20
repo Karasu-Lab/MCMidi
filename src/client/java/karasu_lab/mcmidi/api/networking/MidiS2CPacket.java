@@ -15,9 +15,8 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadFactory;
 
 public class MidiS2CPacket {
-    private static ExtendedMidi midi;
-
     private static final ExecutorService MIDI_PLAYER_POOL;
+    private static ExtendedMidi midi;
 
     static {
         final ThreadFactory threadFactory = r -> {
@@ -36,18 +35,18 @@ public class MidiS2CPacket {
     private static void recieveAsync(SequencePayload payload, ClientPlayNetworking.Context context) {
         NbtCompound nbt = payload.nbt();
 
-        String path = nbt.getString("path");
-        int loopCount = nbt.getInt("loopCount");
-        int startTick = nbt.getInt("startTick");
+        String path = nbt.getString("path").orElse("");
+        int loopCount = nbt.getInt("loopCount").orElse(0);
+        int startTick = nbt.getInt("startTick").orElse(0);
 
-        SequencePayload.MidiPlayerState state = Arrays.stream(SequencePayload.MidiPlayerState.values()).filter(state1 -> state1.getName().equals(nbt.getString("state"))).toList().getFirst();
+        SequencePayload.MidiPlayerState state = Arrays.stream(SequencePayload.MidiPlayerState.values()).filter(state1 -> state1.getName().equals(nbt.getString("state").orElse(""))).toList().getFirst();
 
-        if(state.equals(SequencePayload.MidiPlayerState.STOPPING)){
+        if (state.equals(SequencePayload.MidiPlayerState.STOPPING)) {
             ExtendedMidi.getCurrent().stop();
             return;
         }
 
-        if(path == null || path.isEmpty()){
+        if (path == null || path.isEmpty()) {
             MCMidi.LOGGER.info("No path provided in MIDI packet");
             return;
         }
@@ -56,12 +55,12 @@ public class MidiS2CPacket {
 
         var current = ExtendedMidi.getCurrent();
         try {
-            if(current != null){
+            if (current != null) {
                 current.stop();
             }
             midi = new ExtendedMidi(bytes, Identifier.of(MCMidi.MOD_ID, path));
         } catch (Exception e) {
-            if(current != null){
+            if (current != null) {
                 current.clear();
             }
             MCMidi.LOGGER.error("Failed to load MIDI file: {}", nbt.getString("path"));
@@ -70,11 +69,11 @@ public class MidiS2CPacket {
             return;
         }
 
-        if(loopCount > 0){
+        if (loopCount > 0) {
             midi.setLoopCount(loopCount);
         }
 
-        if(startTick > 0){
+        if (startTick > 0) {
             midi.setStartTick(startTick);
         }
 

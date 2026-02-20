@@ -11,14 +11,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 @Mixin(Screen.class)
 public abstract class ScreenMixin {
-    @Shadow
-    public abstract boolean shouldPause();
-
     @Unique
     private ExtendedMidi current;
-
     @Unique
     private long position = 0;
+
+    @Shadow
+    public abstract boolean shouldPause();
 
     @Inject(method = "init(Lnet/minecraft/client/MinecraftClient;II)V", at = @At("RETURN"))
     public void init(CallbackInfo ci) {

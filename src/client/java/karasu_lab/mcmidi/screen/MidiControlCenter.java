@@ -11,7 +11,10 @@ import net.minecraft.util.Colors;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.sound.midi.*;
+import javax.sound.midi.Instrument;
+import javax.sound.midi.MidiMessage;
+import javax.sound.midi.ShortMessage;
+import javax.sound.midi.Synthesizer;
 import java.awt.*;
 import java.util.ConcurrentModificationException;
 import java.util.HashMap;
@@ -21,15 +24,11 @@ import java.util.function.Function;
 
 public class MidiControlCenter extends Screen {
     private static final Logger LOGGER = LoggerFactory.getLogger(MidiControlCenter.class);
-    private final Screen parent;
-
     private static final Map<Integer, MidiNote> midiNoteMap = new HashMap<>();
     private static final Map<Integer, Instrument> instrumentMap = new HashMap<>();
-
+    private static final String[] NOTE_NAMES = {"C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"};
+    private final Screen parent;
     private Instrument[] instruments;
-
-    private static final String[] NOTE_NAMES = { "C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B" };
-
     private int maxInstrumentNameWidth = 0;
 
     public MidiControlCenter() {

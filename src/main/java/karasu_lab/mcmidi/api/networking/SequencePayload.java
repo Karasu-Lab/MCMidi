@@ -34,7 +34,7 @@ public record SequencePayload(NbtCompound nbt, byte[] bytes) implements CustomPa
         return ID;
     }
 
-    public static enum MidiPlayerState {
+    public enum MidiPlayerState {
         LOADING("loading"),
         PLAYING("playing"),
         PAUSING("pausing"),
@@ -43,7 +43,7 @@ public record SequencePayload(NbtCompound nbt, byte[] bytes) implements CustomPa
 
         private final String name;
 
-        MidiPlayerState(String name){
+        MidiPlayerState(String name) {
             this.name = name;
         }
 

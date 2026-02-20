@@ -31,10 +31,7 @@ import java.util.concurrent.ThreadFactory;
 public class MidiChooseScreen extends GameOptionsScreen implements IScreen {
     private static final Logger LOGGER = LoggerFactory.getLogger(MidiChooseScreen.class);
     private static final String MIDI_DIRECTORY = "midi/musics";
-    private static final String[] MIDI_EXTENTIONS = { ".midi", ".mid" };
-
-    private MidiListWidget midiFileListWidget;
-
+    private static final String[] MIDI_EXTENTIONS = {".midi", ".mid"};
     private static final ExecutorService MIDI_PLAYER_POOL;
 
     static {
@@ -46,6 +43,8 @@ public class MidiChooseScreen extends GameOptionsScreen implements IScreen {
 
         MIDI_PLAYER_POOL = Executors.newSingleThreadExecutor(factory);
     }
+
+    private MidiListWidget midiFileListWidget;
 
     public MidiChooseScreen(Screen parent) {
         super(parent, MinecraftClient.getInstance().options, Text.translatable("mcmidi.options.title"));
@@ -77,8 +76,8 @@ public class MidiChooseScreen extends GameOptionsScreen implements IScreen {
     }
 
     @Override
-    protected void initTabNavigation() {
-        super.initTabNavigation();
+    public void resize(MinecraftClient client, int width, int height) {
+        super.resize(client, width, height);
         this.midiFileListWidget.position(this.width, this.layout);
     }
 
@@ -160,6 +159,11 @@ public class MidiChooseScreen extends GameOptionsScreen implements IScreen {
         return soundfonts;
     }
 
+    @Override
+    public boolean shouldPause() {
+        return true;
+    }
+
     private class MidiListWidget extends AlwaysSelectedEntryListWidget<MidiListWidget.MidiEntry> {
         public MidiListWidget(MinecraftClient minecraftClient) {
             super(minecraftClient, MidiChooseScreen.this.width, MidiChooseScreen.this.height - 33 - 53, 33, 18);
@@ -204,7 +208,7 @@ public class MidiChooseScreen extends GameOptionsScreen implements IScreen {
 
             @Override
             public void render(DrawContext context, int index, int y, int x, int entryWidth, int entryHeight,
-                    int mouseX, int mouseY, boolean hovered, float tickDelta) {
+                               int mouseX, int mouseY, boolean hovered, float tickDelta) {
                 TextRenderer textRenderer = MidiChooseScreen.this.textRenderer;
                 Text midifilepath = Text.literal(this.path);
                 int width = MidiListWidget.this.width / 2;
@@ -239,10 +243,5 @@ public class MidiChooseScreen extends GameOptionsScreen implements IScreen {
                 return super.mouseClicked(mouseX, mouseY, button);
             }
         }
-    }
-
-    @Override
-    public boolean shouldPause() {
-        return true;
     }
 }

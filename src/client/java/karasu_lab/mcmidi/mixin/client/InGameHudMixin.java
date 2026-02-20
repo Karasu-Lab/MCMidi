@@ -12,7 +12,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(InGameHud.class)
 public class InGameHudMixin {
     @Inject(method = "render", at = @At("RETURN"))
-    private void render(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci){
+    private void render(DrawContext context, RenderTickCounter tickCounter, CallbackInfo ci) {
         ExtendedMidi.updatePosition();
     }
 }

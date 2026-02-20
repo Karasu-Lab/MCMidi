@@ -31,9 +31,8 @@ public class SoundFontManagerScreen extends GameOptionsScreen implements IScreen
     private static final Logger LOGGER = LoggerFactory.getLogger(SoundFontManagerScreen.class);
     private static final String SOUNDFONT_DIRECTORY = "midi/soundfonts";
     private static final String SOUNDFONT_EXTENTION = ".sf2";
-
-    private SoundFontOptionListWidget soundFontOptionListWidget;
     private final ModConfig config;
+    private SoundFontOptionListWidget soundFontOptionListWidget;
 
     public SoundFontManagerScreen(Screen parent) {
         this(parent, MinecraftClient.getInstance().options);
@@ -71,8 +70,8 @@ public class SoundFontManagerScreen extends GameOptionsScreen implements IScreen
     }
 
     @Override
-    protected void initTabNavigation() {
-        super.initTabNavigation();
+    public void resize(MinecraftClient client, int width, int height) {
+        super.resize(client, width, height);
         this.soundFontOptionListWidget.position(this.width, this.layout);
     }
 
@@ -206,7 +205,7 @@ public class SoundFontManagerScreen extends GameOptionsScreen implements IScreen
 
             @Override
             public void render(DrawContext context, int index, int y, int x, int entryWidth, int entryHeight,
-                    int mouseX, int mouseY, boolean hovered, float tickDelta) {
+                               int mouseX, int mouseY, boolean hovered, float tickDelta) {
                 TextRenderer textRenderer = SoundFontManagerScreen.this.textRenderer;
                 Text soundFontName = isDefault ? Text.translatable("mcmidi.options.default_soundfont")
                         : Text.literal(this.soundFont.getName());

@@ -10,29 +10,18 @@ import javax.sound.midi.Sequencer;
 import java.io.DataOutput;
 import java.io.IOException;
 
-public abstract class CustomSequencer extends NbtCompound implements Sequencer {
-    @Override
-    public void write(DataOutput output) throws IOException {
+public abstract class CustomSequencer implements Sequencer {
+    private final NbtCompound nbtCompound;
 
+    public CustomSequencer() {
+        this.nbtCompound = new NbtCompound();
     }
 
-    @Override
-    public byte getType() {
-        return 0;
+    public CustomSequencer(NbtCompound nbtCompound) {
+        this.nbtCompound = nbtCompound;
     }
 
-    @Override
-    public int getSizeInBytes() {
-        return 0;
-    }
-
-    @Override
-    public void accept(NbtElementVisitor visitor) {
-
-    }
-
-    @Override
-    public NbtScanner.Result doAccept(NbtScanner visitor) {
-        return null;
+    public NbtCompound getNbtCompound() {
+        return nbtCompound;
     }
 }

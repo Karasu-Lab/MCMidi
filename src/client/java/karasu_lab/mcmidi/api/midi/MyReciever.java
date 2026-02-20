@@ -9,7 +9,7 @@ import java.util.function.Function;
 public class MyReciever implements Receiver {
     private final Function<Pair<MidiMessage, Long>, Integer> onControlChange;
 
-    public MyReciever(Function<Pair<MidiMessage, Long>, Integer> onControlChange){
+    public MyReciever(Function<Pair<MidiMessage, Long>, Integer> onControlChange) {
         this.onControlChange = onControlChange;
     }
 

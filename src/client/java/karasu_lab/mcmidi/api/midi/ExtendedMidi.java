@@ -11,20 +11,19 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.sound.midi.*;
-import java.io.*;
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.IOException;
 
 public class ExtendedMidi {
     private static final Logger LOGGER = LoggerFactory.getLogger(ExtendedMidi.class);
+    private static ExtendedMidi current;
     private final ModConfig config;
     private final byte[] bytes;
     private final Identifier identifier;
-
     private final Sequencer sequencer;
     private final Sequence sequence;
     private final Synthesizer synthesizer;
-
-    private static ExtendedMidi current;
-
     private long position;
 
     public ExtendedMidi(byte[] bytes, Identifier identifier) throws Exception {
@@ -47,12 +46,49 @@ public class ExtendedMidi {
         return current;
     }
 
-    public Identifier getIdentifier() {
-        return identifier;
-    }
-
     public static Synthesizer getSynthesizer() {
         return current.synthesizer;
+    }
+
+    public static void clearAll() {
+        if (current != null) {
+            try {
+                current.stop();
+
+                if (current.sequencer != null && current.sequencer.isOpen()) {
+                    current.sequencer.stop();
+                    current.sequencer.close();
+                }
+
+                if (current.synthesizer != null && current.synthesizer.isOpen()) {
+                    current.synthesizer.close();
+                }
+
+                LOGGER.info("All MIDI resources cleared");
+            } catch (Exception e) {
+                LOGGER.error("Error clearing MIDI resources", e);
+            } finally {
+                current = null;
+            }
+        }
+    }
+
+    public static void pauseCurrent() {
+        var current = ExtendedMidi.getCurrent();
+        if (current != null) {
+            current.pause();
+        }
+    }
+
+    public static void updatePosition() {
+        var current = ExtendedMidi.getCurrent();
+        if (current != null && current.sequencer.isOpen()) {
+            current.position = current.sequencer.getTickPosition();
+        }
+    }
+
+    public Identifier getIdentifier() {
+        return identifier;
     }
 
     public void saveToLocal(byte[] bytes, String path) {
@@ -115,36 +151,6 @@ public class ExtendedMidi {
         }
     }
 
-    public static void clearAll() {
-        if (current != null) {
-            try {
-                current.stop();
-
-                if (current.sequencer != null && current.sequencer.isOpen()) {
-                    current.sequencer.stop();
-                    current.sequencer.close();
-                }
-
-                if (current.synthesizer != null && current.synthesizer.isOpen()) {
-                    current.synthesizer.close();
-                }
-
-                LOGGER.info("All MIDI resources cleared");
-            } catch (Exception e) {
-                LOGGER.error("Error clearing MIDI resources", e);
-            } finally {
-                current = null;
-            }
-        }
-    }
-
-    public static void pauseCurrent() {
-        var current = ExtendedMidi.getCurrent();
-        if (current != null) {
-            current.pause();
-        }
-    }
-
     public void stopCurrent() {
         var current = ExtendedMidi.getCurrent();
         if (current != null) {
@@ -158,13 +164,6 @@ public class ExtendedMidi {
             return current.sequencer.getTickPosition();
         }
         return 0;
-    }
-
-    public static void updatePosition() {
-        var current = ExtendedMidi.getCurrent();
-        if (current != null && current.sequencer.isOpen()) {
-            current.position = current.sequencer.getTickPosition();
-        }
     }
 
     public void setPosition(long position) {
