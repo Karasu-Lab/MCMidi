@@ -4,9 +4,6 @@ import net.minecraft.client.gui.tab.Tab;
 import net.minecraft.client.gui.tab.TabManager;
 import net.minecraft.client.gui.widget.TabNavigationWidget;
 
-/**
- * A tab bar implementation that wraps Minecraft's TabNavigationWidget.
- */
 public class TabBarWidget extends AbstractTabBar<ITabContent> {
     private TabNavigationWidget navigation;
     private final TabManager tabManager;
