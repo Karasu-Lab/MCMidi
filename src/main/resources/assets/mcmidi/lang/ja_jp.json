@@ -37,5 +37,9 @@
     "command.mcmidi.config.get.success": "%s = %s",
     "command.mcmidi.config.set.success": "%sを%sに設定しました",
     "command.mcmidi.error.generic": "エラー: %s",
-    "command.mcmidi.error.unknown_field": "不明なフィールド: %s"
+    "command.mcmidi.error.unknown_field": "不明なフィールド: %s",
+    "mcmidi.tab.detail": "詳細",
+    "mcmidi.tab.nodes": "ノード",
+    "mcmidi.tab.piano": "ピアノ",
+    "mcmidi.tab.waveform": "波形"
 }

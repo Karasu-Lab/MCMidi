@@ -4,7 +4,7 @@ import com.karasu256.mcmidi.Constants;
 import com.karasu256.mcmidi.config.ConfigManager;
 import com.karasu256.mcmidi.config.ModConfig;
 import com.karasu256.mcmidi.impl.IMidiPlayer;
-import com.karasu256.mcmidi.screen.MidiControlCenter;
+import com.karasu256.mcmidi.screen.MidiControlCenterScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.text.Text;
 import org.jetbrains.annotations.Nullable;
@@ -50,7 +50,7 @@ public class ExtendedMidi implements IMidiPlayer {
                 myReceiver.setListener(new Receiver() {
                     @Override
                     public void send(MidiMessage message, long timeStamp) {
-                        if (MinecraftClient.getInstance().currentScreen instanceof MidiControlCenter controlCenter) {
+                        if (MinecraftClient.getInstance().currentScreen instanceof MidiControlCenterScreen controlCenter) {
                             controlCenter.onReceive(message);
                         }
                     }
@@ -91,15 +91,20 @@ public class ExtendedMidi implements IMidiPlayer {
     @Override
     public void setPosition(long position) {
         this.position = position;
-        this.sequencer.setTickPosition(this.position);
+        this.sequencer.setMicrosecondPosition(this.position);
     }
 
     @Override
     public long getPosition() {
         if (this.sequencer.isOpen()) {
-            return this.sequencer.getTickPosition();
+            return this.sequencer.getMicrosecondPosition();
         }
         return 0;
+    }
+
+    @Override
+    public long getLength() {
+        return this.sequencer.getMicrosecondLength();
     }
 
     @Override

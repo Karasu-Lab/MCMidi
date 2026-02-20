@@ -3,7 +3,7 @@ package com.karasu256.mcmidi.client;
 import com.karasu256.mcmidi.command.MidiClientCommand;
 import com.karasu256.mcmidi.config.ConfigManager;
 import com.karasu256.mcmidi.networking.ModClientNetworking;
-import com.karasu256.mcmidi.screen.MidiControlCenter;
+import com.karasu256.mcmidi.screen.MidiControlCenterScreen;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
@@ -34,7 +34,7 @@ public class MCMidiClient implements ClientModInitializer {
 
         ClientTickEvents.END_CLIENT_TICK.register(client -> {
             while (keyBinding.wasPressed()) {
-                client.setScreen(new MidiControlCenter());
+                client.setScreen(new MidiControlCenterScreen());
             }
         });
     }

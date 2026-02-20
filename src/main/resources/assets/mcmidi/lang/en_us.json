@@ -37,5 +37,9 @@
     "command.mcmidi.config.get.success": "%s = %s",
     "command.mcmidi.config.set.success": "Set %s to %s",
     "command.mcmidi.error.generic": "Error: %s",
-    "command.mcmidi.error.unknown_field": "Unknown field: %s"
+    "command.mcmidi.error.unknown_field": "Unknown field: %s",
+    "mcmidi.tab.detail": "Detail",
+    "mcmidi.tab.nodes": "Nodes",
+    "mcmidi.tab.piano": "Piano",
+    "mcmidi.tab.waveform": "Waveform"
 }

@@ -13,6 +13,8 @@ public interface IMidiPlayer {
 
     long getPosition();
 
+    long getLength();
+
     boolean isPlaying();
 
     void setSoundFont(byte[] soundFontData);
