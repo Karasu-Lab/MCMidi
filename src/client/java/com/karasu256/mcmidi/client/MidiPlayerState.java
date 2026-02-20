@@ -37,13 +37,34 @@ public class MidiPlayerState {
 
     public void setCurrentEngine(@Nullable IMidiEngine engine) {
         this.currentEngine = engine;
+        if (this.currentEngine != null) {
+            for (java.util.function.BiConsumer<javax.sound.midi.MidiMessage, Long> listener : globalListeners) {
+                this.currentEngine.registerListener(listener);
+            }
+        }
+    }
+
+    private final java.util.List<java.util.function.BiConsumer<javax.sound.midi.MidiMessage, Long>> globalListeners = new java.util.ArrayList<>();
+
+    public void registerGlobalListener(java.util.function.BiConsumer<javax.sound.midi.MidiMessage, Long> listener) {
+        this.globalListeners.add(listener);
+        if (this.currentEngine != null) {
+            this.currentEngine.registerListener(listener);
+        }
+    }
+
+    public void unregisterGlobalListener(java.util.function.BiConsumer<javax.sound.midi.MidiMessage, Long> listener) {
+        this.globalListeners.remove(listener);
+        if (this.currentEngine != null) {
+            this.currentEngine.unregisterListener(listener);
+        }
     }
 
     public void playMidi(byte[] midiData) {
         stopCurrent();
         try {
             JavaMidiEngine engine = new JavaMidiEngine(midiData);
-            this.currentEngine = engine;
+            this.setCurrentEngine(engine);
             engine.play();
         } catch (Exception e) {
             Constants.LOGGER.error("Failed to play MIDI", e);

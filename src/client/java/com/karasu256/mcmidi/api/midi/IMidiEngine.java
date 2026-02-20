@@ -40,4 +40,6 @@ public interface IMidiEngine {
     float getBPM();
 
     void registerListener(BiConsumer<MidiMessage, Long> listener);
+
+    void unregisterListener(BiConsumer<MidiMessage, Long> listener);
 }

@@ -1,5 +1,6 @@
 package com.karasu256.mcmidi.screen;
 
+import com.karasu256.mcmidi.client.MidiPlayerState;
 import com.karasu256.mcmidi.screen.ui.DetailTab;
 import com.karasu256.mcmidi.screen.ui.NodesTab;
 import com.karasu256.mcmidi.screen.ui.PianoTab;
@@ -14,7 +15,6 @@ import net.minecraft.client.gui.ScreenRect;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.tab.Tab;
 import net.minecraft.client.gui.tab.TabManager;
-import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.gui.widget.DirectionalLayoutWidget;
 import net.minecraft.client.gui.widget.TabNavigationWidget;
 import net.minecraft.client.gui.widget.ThreePartsLayoutWidget;
@@ -22,6 +22,7 @@ import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 
 import javax.sound.midi.MidiMessage;
+import java.util.function.BiConsumer;
 
 public class MidiControlCenterScreen extends Screen {
     public static final Identifier TAB_HEADER_BACKGROUND_TEXTURE = Identifier.ofVanilla("textures/gui/tab_header_background.png");
@@ -35,6 +36,8 @@ public class MidiControlCenterScreen extends Screen {
     private TabNavigationWidget tabNavigation;
     private IControlWidget playbackControl;
     private PlaybackControlWidget playbackControlWidget;
+
+    private final BiConsumer<MidiMessage, Long> midiListener = (message, time) -> this.onReceive(message);
 
     public MidiControlCenterScreen() {
         this(MinecraftClient.getInstance().currentScreen);
@@ -72,6 +75,8 @@ public class MidiControlCenterScreen extends Screen {
 
         this.tabNavigation.selectTab(0, false);
         this.refreshWidgetPositions();
+
+        MidiPlayerState.getInstance().registerGlobalListener(this.midiListener);
     }
 
     @Override
@@ -130,6 +135,7 @@ public class MidiControlCenterScreen extends Screen {
 
     @Override
     public void close() {
+        MidiPlayerState.getInstance().unregisterGlobalListener(this.midiListener);
         if (this.client != null) {
             this.client.setScreen(this.parent);
         }

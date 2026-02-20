@@ -27,6 +27,11 @@ public abstract class AbstractMidiEngine implements IMidiEngine {
         this.listeners.add(listener);
     }
 
+    @Override
+    public void unregisterListener(BiConsumer<MidiMessage, Long> listener) {
+        this.listeners.remove(listener);
+    }
+
     protected void notifyListeners(MidiMessage message, long timeStamp) {
         for (BiConsumer<MidiMessage, Long> listener : listeners) {
             listener.accept(message, timeStamp);
