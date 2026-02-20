@@ -1,5 +1,21 @@
 # Changelog
 
+## [2.0.0](https://github.com/Karasu-Lab/MCMidi/compare/v1.1.0...v2.0.0) (2026-02-20)
+
+
+### ⚠ BREAKING CHANGES
+
+* refactored codes and removed server side codes
+
+### Bug Fixes
+
+* fixed client crash ([40e1b0a](https://github.com/Karasu-Lab/MCMidi/commit/40e1b0a062ab4e436a3ff4734d32bce6271ade87))
+
+
+### Code Refactoring
+
+* refactored codes and removed server side codes ([5071808](https://github.com/Karasu-Lab/MCMidi/commit/5071808327209a59c4837cd98d5138f073f14a1d))
+
 ## [1.1.0](https://github.com/Karasu-Lab/MCMidi/compare/v1.0.4...v1.1.0) (2026-02-20)
 
 
