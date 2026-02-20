@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.2](https://github.com/Karasu-Lab/MCMidi/compare/v2.0.1...v2.0.2) (2026-02-20)
+
+
+### Bug Fixes
+
+* fixed screen ([51a12e6](https://github.com/Karasu-Lab/MCMidi/commit/51a12e63b1be72159fafcc9b09d57474234c4a9a))
+
 ## [2.0.1](https://github.com/Karasu-Lab/MCMidi/compare/v2.0.0...v2.0.1) (2026-02-20)
 
 
