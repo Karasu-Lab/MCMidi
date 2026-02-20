@@ -1,0 +1,36 @@
+{
+    "java": 21,
+    "loaders": [
+        "fabric"
+    ],
+    "release_title_format": "{archives_base_name} {mod_version} for MC {minecraft_version}",
+    "dependencies": {
+        "net.fabricmc.fabric-api:fabric-api": {
+            "name": "fabric-api",
+            "type": "required",
+            "modrinth": "P7dR8mSH",
+            "curseforge": "306612"
+        },
+        "me.shedaniel.cloth:cloth-config-fabric": {
+            "name": "cloth-config",
+            "type": "required",
+            "modrinth": "9s6osm5g",
+            "curseforge": "348521"
+        },
+        "com.terraformersmc:modmenu": {
+            "name": "modmenu",
+            "type": "optional",
+            "modrinth": "mOgUt4GM",
+            "curseforge": "308702"
+        },
+        "com.karasu256:karasunikilib": {
+            "name": "KarasunikiLib",
+            "type": "required",
+            "modrinth": "DFR1YkHk",
+            "curseforge": "1466401"
+        }
+    },
+    "extra_dependencies": [
+        "com.karasu256:karasunikilib"
+    ]
+}

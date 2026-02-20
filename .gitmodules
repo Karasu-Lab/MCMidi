@@ -1,0 +1,3 @@
+[submodule "modules/KarasunikiLib"]
+	path = modules/KarasunikiLib
+	url = https://github.com/Karasu-Lab/KarasunikiLib.git
