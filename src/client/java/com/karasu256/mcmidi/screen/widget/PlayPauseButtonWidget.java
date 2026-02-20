@@ -2,10 +2,9 @@ package com.karasu256.mcmidi.screen.widget;
 
 import com.karasu256.mcmidi.client.MidiPlayerState;
 import com.karasu256.mcmidi.impl.IMidiPlayer;
-import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.text.Text;
 
-public class PlayPauseButtonWidget extends ButtonWidget {
+public class PlayPauseButtonWidget extends AbstractCustomWidget {
     private static final Text PLAY_TEXT = Text.literal("▶");
     private static final Text PAUSE_TEXT = Text.literal("⏸");
 
@@ -18,11 +17,12 @@ public class PlayPauseButtonWidget extends ButtonWidget {
             } else {
                 player.play();
             }
-            ((PlayPauseButtonWidget) button).refreshState();
-        }, DEFAULT_NARRATION_SUPPLIER);
+            ((PlayPauseButtonWidget) button).refresh();
+        });
     }
 
-    public void refreshState() {
+    @Override
+    public void refresh() {
         IMidiPlayer player = MidiPlayerState.getInstance().getCurrentPlayer();
         boolean hasMidi = player != null;
         boolean isPlaying = hasMidi && player.isPlaying();

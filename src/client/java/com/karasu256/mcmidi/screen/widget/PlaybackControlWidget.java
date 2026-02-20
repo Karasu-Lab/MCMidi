@@ -1,56 +1,54 @@
 package com.karasu256.mcmidi.screen.widget;
 
-import com.karasu256.mcmidi.api.midi.ExtendedMidi;
-import com.karasu256.mcmidi.client.MidiPlayerState;
-import com.karasu256.mcmidi.impl.IMidiPlayer;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.DirectionalLayoutWidget;
 
-public class PlaybackControlWidget {
-    private final SeekBarWidget seekBar;
-    private final PlayPauseButtonWidget playPauseButton;
-    private final StopButtonWidget stopButton;
-    private final OpenSoundFontButtonWidget openSoundFontButton;
-    private final OpenMidiButtonWidget openMidiButton;
+import java.util.ArrayList;
+import java.util.List;
+
+public class PlaybackControlWidget implements IControlWidget {
+    private final List<IControlWidget> children = new ArrayList<>();
     private final DirectionalLayoutWidget layout;
 
     public PlaybackControlWidget(Screen parentScreen) {
         this.layout = DirectionalLayoutWidget.horizontal().spacing(4);
 
-        this.seekBar = new SeekBarWidget(0, 0, 200, 20);
-        this.playPauseButton = new PlayPauseButtonWidget();
-        this.stopButton = new StopButtonWidget();
-        this.openSoundFontButton = new OpenSoundFontButtonWidget(parentScreen);
-        this.openMidiButton = new OpenMidiButtonWidget(parentScreen);
+        SeekBarWidget seekBar = new SeekBarWidget(0, 0, 200, 20);
+        PlayPauseButtonWidget playPauseButton = new PlayPauseButtonWidget();
+        StopButtonWidget stopButton = new StopButtonWidget();
+        OpenSoundFontButtonWidget openSoundFontButton = new OpenSoundFontButtonWidget(parentScreen);
+        OpenButtonWidget openMidiButton = new OpenButtonWidget(parentScreen);
 
-        this.layout.add(this.seekBar);
-        this.layout.add(this.playPauseButton);
-        this.layout.add(this.stopButton);
-        this.layout.add(this.openSoundFontButton);
-        this.layout.add(this.openMidiButton);
+        this.layout.add(seekBar);
+        this.layout.add(playPauseButton);
+        this.layout.add(stopButton);
+        this.layout.add(openSoundFontButton);
+        this.layout.add(openMidiButton);
 
-        refreshState();
+        this.children.add(seekBar);
+        this.children.add(playPauseButton);
+        this.children.add(stopButton);
+        this.children.add(openSoundFontButton);
+        this.children.add(openMidiButton);
+
+        refresh();
     }
 
     public DirectionalLayoutWidget getLayout() {
         return this.layout;
     }
 
+    @Override
     public void tick() {
-        IMidiPlayer player = MidiPlayerState.getInstance().getCurrentPlayer();
-        if (player instanceof ExtendedMidi midi) {
-            long length = midi.getLength();
-            if (length > 0 && !seekBar.isDragging()) {
-                double progress = (double) midi.getPosition() / length;
-                seekBar.setProgress(progress);
-            }
+        for (IControlWidget child : children) {
+            child.tick();
         }
-        refreshState();
     }
 
-    public void refreshState() {
-        this.playPauseButton.refreshState();
-        this.stopButton.refreshState();
+    @Override
+    public void refresh() {
+        for (IControlWidget child : children) {
+            child.refresh();
+        }
     }
-
 }

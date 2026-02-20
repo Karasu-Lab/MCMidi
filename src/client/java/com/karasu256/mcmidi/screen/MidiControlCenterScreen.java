@@ -4,6 +4,7 @@ import com.karasu256.mcmidi.screen.ui.DetailTab;
 import com.karasu256.mcmidi.screen.ui.NodesTab;
 import com.karasu256.mcmidi.screen.ui.PianoTab;
 import com.karasu256.mcmidi.screen.ui.WaveformTab;
+import com.karasu256.mcmidi.screen.widget.IControlWidget;
 import com.karasu256.mcmidi.screen.widget.PlaybackControlWidget;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
@@ -32,7 +33,8 @@ public class MidiControlCenterScreen extends Screen {
     );
     private final Screen parent;
     private TabNavigationWidget tabNavigation;
-    private PlaybackControlWidget playbackControl;
+    private IControlWidget playbackControl;
+    private PlaybackControlWidget playbackControlWidget;
 
     public MidiControlCenterScreen() {
         this(MinecraftClient.getInstance().currentScreen);
@@ -59,8 +61,9 @@ public class MidiControlCenterScreen extends Screen {
                 .build();
         this.addDrawableChild(this.tabNavigation);
 
-        this.playbackControl = new PlaybackControlWidget(this);
-        DirectionalLayoutWidget footer = this.layout.addFooter(this.playbackControl.getLayout());
+        this.playbackControlWidget = new PlaybackControlWidget(this);
+        this.playbackControl = this.playbackControlWidget;
+        DirectionalLayoutWidget footer = this.layout.addFooter(this.playbackControlWidget.getLayout());
 
         this.layout.forEachChild(child -> {
             child.setNavigationOrder(1);
@@ -101,6 +104,7 @@ public class MidiControlCenterScreen extends Screen {
         super.tick();
         if (this.playbackControl != null) {
             this.playbackControl.tick();
+            this.playbackControl.refresh();
         }
     }
 

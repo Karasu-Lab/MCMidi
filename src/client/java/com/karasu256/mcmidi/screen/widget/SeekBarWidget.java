@@ -6,7 +6,7 @@ import com.karasu256.mcmidi.impl.IMidiPlayer;
 import net.minecraft.client.gui.widget.SliderWidget;
 import net.minecraft.text.Text;
 
-public class SeekBarWidget extends SliderWidget {
+public class SeekBarWidget extends SliderWidget implements IControlWidget {
     private boolean userDragging;
 
     public SeekBarWidget(int x, int y, int width, int height) {
@@ -55,5 +55,20 @@ public class SeekBarWidget extends SliderWidget {
 
     public boolean isDragging() {
         return this.userDragging;
+    }
+
+    @Override
+    public void tick() {
+        IMidiPlayer player = MidiPlayerState.getInstance().getCurrentPlayer();
+        if (player instanceof ExtendedMidi midi) {
+            long length = midi.getLength();
+            if (length > 0 && !userDragging) {
+                setProgress((double) midi.getPosition() / length);
+            }
+        }
+    }
+
+    @Override
+    public void refresh() {
     }
 }
