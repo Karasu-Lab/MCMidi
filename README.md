@@ -1,31 +1,53 @@
 # MCMidi
 
-This mod allows you to play midi files.
+MCMidi is a Minecraft Fabric mod that allows you to play MIDI files in-game with high-quality sound and real-time visualization.
 
-## Commands
-- `/midi play [targets] [path_to_midi(Optional)] [loopCount(Optional)] [startTick(Optional)]`
+## Features
+- **MIDI Playback**: Play `.midi` or `.mid` files directly within your Minecraft client.
+- **Custom SoundFonts**: Support for `.sf2` SoundFont files to customize your instrument sounds.
+- **Real-time Visualization**: A dedicated "Midi Control Center" with multiple visualization tabs:
+    - **Detail**: Real-time MIDI message log, BPM, and playback position.
+    - **Nodes**: Visual representation of active MIDI nodes.
+    - **Piano**: A virtual piano roll showing active notes.
+    - **Waveform**: Dynamic waveform visualization.
+- **In-Game Configuration**: Integrates with Mod Menu and Cloth Config for seamless setting adjustments.
+- **Client-Side Commands**: Quick control over playback using console commands.
 
-The midi files is located to `$ClientPath/midi/mcmidi/midi/*.midi`
-If the command run, server will send a midi file to your client and play it in client.
+## Command Usage
+Manage your MIDI playback using the following client-side commands:
 
-- `/midi stop [targets]`
+- `/midi play <filename>`: Plays a MIDI file from your local library.
+- `/midi stop`: Stops the current MIDI playback.
 
-This command requests to client to stop midi playing.
+## How to Use
+1. **Prepare your files**:
+    - Place your `.midi` or `.mid` files in the `midi/musics/` directory within your Minecraft instance folder.
+    - (Optional) Place your `.sf2` SoundFont files in the `midi/soundfonts/` directory.
+2. **Launch Minecraft**: Open the **Midi Control Center** by pressing `,` (default keybind).
+3. **Configure Settings**: Open the Mod Menu from the main menu, find **MCMidi**, and click the gear icon to adjust volume or select a custom SoundFont.
 
-### Example
+## Implemented Architecture
+MCMidi is built with a focus on modularity and maintainability:
+- **Dependency Injection**: Uses an abstracted `IConfigManager` to handle configuration without global static state.
+- **Abstracted Tab System**: Leverages `KarasunikiLib`'s `ITabBar` and `ITabContent` interfaces to provide a flexible and extensible UI.
+- **Decoupled MIDI Engine**: Uses the `IMidiEngine` interface, allowing the mod to support different MIDI drivers or external devices in the future.
 
-![Midi Controll Center](https://cdn.modrinth.com/data/cached_images/6e5e86cb826a3ff08c17d68872e0413eb5bbdab9_0.webp)
+## Dependencies
+This mod requires the following libraries:
+- **Fabric API**
+- **KarasunikiLib**
+- **Cloth Config API**
+- **Mod Menu** (Optional, recommended for configuration UI)
 
-## KeyBinds
-`,`:Open midi controll center screen.
+## Contribution
+Contributions are welcome! If you have suggestions, bug reports, or would like to submit a pull request, please follow these steps:
 
-## Other changes
-This mod adds gameoptions screen likes this image.
-![Options screen](https://cdn.modrinth.com/data/cached_images/1aa9aa4b569dd9bc73db032c5731ab674fd75ac3_0.webp)
+1. Fork this repository and create your branch from `master`.
+2. Make your changes with clear commit messages.
+3. Ensure your code builds and passes any existing checks.
+4. Submit a pull request with a description of your changes.
 
-## Supported files
-- .midi
-- .sf2
+For major changes, please open an issue first to discuss what you would like to change.
 
-## Todos
-- [x] Fix momentary drop in fps when play midi files.
+## License
+This project is licensed under the MIT License. See [LICENSE](https://github.com/Hashibutogarasu/MCMidi/blob/main/LICENSE) for details.
