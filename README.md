@@ -7,9 +7,9 @@ MCMidi is a Minecraft Fabric mod that allows you to play MIDI files in-game with
 - **Custom SoundFonts**: Support for `.sf2` SoundFont files to customize your instrument sounds.
 - **Real-time Visualization**: A dedicated "Midi Control Center" with multiple visualization tabs:
     - **Detail**: Real-time MIDI message log, BPM, and playback position.
-    - **Nodes**: Visual representation of active MIDI nodes.
-    - **Piano**: A virtual piano roll showing active notes.
-    - **Waveform**: Dynamic waveform visualization.
+    - **Nodes**: Visual representation of active MIDI nodes. (Not implemented.)
+    - **Piano**: A virtual piano roll showing active notes.(Not implemented.)
+    - **Waveform**: Dynamic waveform visualization. (Not implemented.)
 - **In-Game Configuration**: Integrates with Mod Menu and Cloth Config for seamless setting adjustments.
 - **Client-Side Commands**: Quick control over playback using console commands.
 
