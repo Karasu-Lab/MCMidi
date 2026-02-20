@@ -68,7 +68,6 @@ public record FileManager<T extends IFileType>(T fileType) {
         return tempFile;
     }
 
-    // Extension-agnostic binary loading
     public byte[] loadData(String identifier) throws IOException {
         Optional<File> file = resolveFile(identifier);
         if (file.isPresent()) {
