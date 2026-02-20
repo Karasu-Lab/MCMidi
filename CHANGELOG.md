@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.0.1](https://github.com/Karasu-Lab/MCMidi/compare/v2.0.0...v2.0.1) (2026-02-20)
+
+
+### Bug Fixes
+
+* fixed UI ([83086e5](https://github.com/Karasu-Lab/MCMidi/commit/83086e56c5364e876bfa76cc32aa3e1b645f06c6))
+
 ## [2.0.0](https://github.com/Karasu-Lab/MCMidi/compare/v1.1.0...v2.0.0) (2026-02-20)
 
 
