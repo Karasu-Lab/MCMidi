@@ -1,6 +1,5 @@
 package com.karasu256.mcmidi.networking;
 
-import com.karasu256.mcmidi.Constants;
 import com.karasu256.mcmidi.MCMidi;
 import net.minecraft.nbt.NbtCompound;
 import net.minecraft.network.PacketByteBuf;
