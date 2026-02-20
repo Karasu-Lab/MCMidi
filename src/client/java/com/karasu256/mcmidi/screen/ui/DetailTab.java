@@ -6,7 +6,6 @@ import com.karasu256.mcmidi.api.midi.JavaMidiEngine;
 import com.karasu256.mcmidi.client.MidiPlayerState;
 import com.karasu256.mcmidi.screen.MidiControlCenterScreen;
 import com.karasu256.mcmidi.screen.widget.AbstractTabContent;
-import com.karasu256.mcmidi.screen.widget.ITabContent;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.widget.ClickableWidget;
@@ -52,8 +51,7 @@ public class DetailTab extends AbstractTabContent {
                 Instrument instrument = instruments[channel];
                 instrumentMap.put(channel, instrument);
                 String channelFormatted = String.format("Ch%d: %s", channel, instrument.getName());
-                int w = textRenderer != null ? textRenderer.getWidth(channelFormatted)
-                        : channelFormatted.length() * 6;
+                int w = textRenderer != null ? textRenderer.getWidth(channelFormatted) : channelFormatted.length() * 6;
                 if (w > maxInstrumentNameWidth) {
                     maxInstrumentNameWidth = w;
                 }
@@ -148,8 +146,7 @@ public class DetailTab extends AbstractTabContent {
                                     String noteName = Constants.NOTE_NAMES[note];
                                     int velocity = midiNote.getData2();
 
-                                    data1Styled = Text.literal(noteName + octave)
-                                            .setStyle(Style.EMPTY.withColor(Constants.getNoteColor(noteName).getRGB()));
+                                    data1Styled = Text.literal(noteName + octave).setStyle(Style.EMPTY.withColor(Constants.getNoteColor(noteName).getRGB()));
                                     data2Styled = Text.literal(String.valueOf(velocity));
                                 } else if (midiNote.getCommand() == ShortMessage.NOTE_OFF) {
                                     data1Styled = Text.literal("OFF").setStyle(Style.EMPTY.withColor(Colors.RED));
