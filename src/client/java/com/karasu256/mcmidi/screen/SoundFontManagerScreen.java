@@ -57,12 +57,8 @@ public class SoundFontManagerScreen extends GameOptionsScreen implements IMidiSc
         DirectionalLayoutWidget directionalLayoutWidget2 = directionalLayoutWidget
                 .add(DirectionalLayoutWidget.horizontal().spacing(8));
         directionalLayoutWidget2
-                .add(ButtonWidget.builder(Text.translatable("text.mcmidi.opensoundfontdirectory"), (button) -> {
-                    this.resourceManager.openDirectory();
-                }).build());
-        directionalLayoutWidget2.add(ButtonWidget.builder(ScreenTexts.DONE, (button) -> {
-            this.onDone();
-        }).build());
+                .add(ButtonWidget.builder(Text.translatable("text.mcmidi.opensoundfontdirectory"), (button) -> this.resourceManager.openDirectory()).build());
+        directionalLayoutWidget2.add(ButtonWidget.builder(ScreenTexts.DONE, (button) -> this.onDone()).build());
     }
 
     @Override

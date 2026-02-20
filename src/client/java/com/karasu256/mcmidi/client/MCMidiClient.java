@@ -2,7 +2,6 @@ package com.karasu256.mcmidi.client;
 
 import com.karasu256.mcmidi.command.MidiClientCommand;
 import com.karasu256.mcmidi.config.ConfigManager;
-import com.karasu256.mcmidi.networking.ModClientNetworking;
 import com.karasu256.mcmidi.screen.MidiControlCenterScreen;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
@@ -24,8 +23,6 @@ public class MCMidiClient implements ClientModInitializer {
     @Override
     public void onInitializeClient() {
         ConfigManager.getInstance().getProvider().register();
-        ModClientNetworking.registerS2CPackets();
-
         ClientCommandRegistrationCallback.EVENT.register(MidiClientCommand::register);
 
         ClientPlayConnectionEvents.JOIN.register((handler, sender, client) -> {

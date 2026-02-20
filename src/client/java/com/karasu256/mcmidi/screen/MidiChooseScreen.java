@@ -65,12 +65,8 @@ public class MidiChooseScreen extends GameOptionsScreen implements IMidiScreen {
         DirectionalLayoutWidget directionalLayoutWidget2 = directionalLayoutWidget
                 .add(DirectionalLayoutWidget.horizontal().spacing(8));
         directionalLayoutWidget2
-                .add(ButtonWidget.builder(Text.translatable("text.mcmidi.openmididirectory"), (button) -> {
-                    this.resourceManager.openDirectory();
-                }).build());
-        directionalLayoutWidget2.add(ButtonWidget.builder(ScreenTexts.DONE, (button) -> {
-            MIDI_PLAYER_POOL.submit(this::onDone);
-        }).build());
+                .add(ButtonWidget.builder(Text.translatable("text.mcmidi.openmididirectory"), (button) -> this.resourceManager.openDirectory()).build());
+        directionalLayoutWidget2.add(ButtonWidget.builder(ScreenTexts.DONE, (button) -> MIDI_PLAYER_POOL.submit(this::onDone)).build());
     }
 
     @Override

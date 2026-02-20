@@ -87,7 +87,7 @@ public class DetailTab extends AbstractTabContent {
             TextRenderer textRenderer = parentScreen.getTextRenderer();
             IMidiEngine engine = MidiPlayerState.getInstance().getCurrentEngine();
 
-            int baseX = this.getX();
+            int column1X = this.getX();
             int baseY = this.getY();
             AtomicInteger offsetY = new AtomicInteger(baseY);
 
@@ -110,7 +110,6 @@ public class DetailTab extends AbstractTabContent {
             int columnSpacing = 20;
             int channelColumnWidth = Math.max(maxInstrumentNameWidth, channelTextWidth);
 
-            int column1X = baseX;
             int column2X = column1X + channelColumnWidth + columnSpacing;
             int column3X = column2X + statusTextWidth + columnSpacing;
             int column4X = column3X + data1TextWidth + columnSpacing;

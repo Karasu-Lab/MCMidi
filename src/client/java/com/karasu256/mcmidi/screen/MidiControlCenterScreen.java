@@ -29,8 +29,8 @@ public class MidiControlCenterScreen extends Screen {
 
     private final ThreePartsLayoutWidget layout = new ThreePartsLayoutWidget(this);
     private final TabManager tabManager = new TabManager(
-            element -> this.addDrawableChild(element),
-            child -> this.remove(child)
+            this::addDrawableChild,
+            this::remove
     );
     private final Screen parent;
     private final BiConsumer<MidiMessage, Long> midiListener = (message, time) -> this.onReceive(message);
