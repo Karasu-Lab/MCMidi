@@ -4,7 +4,7 @@ import com.karasu256.mcmidi.Constants;
 import com.karasu256.mcmidi.client.MidiPlayerState;
 import com.karasu256.mcmidi.impl.IMidiPlayer;
 import com.karasu256.mcmidi.impl.IMidiScreen;
-import com.karasu256.mcmidi.impl.IResourceManager;
+import com.karasu256.mcmidi.api.FileManager;
 import com.karasu256.mcmidi.api.midi.ExtendedMidi;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
@@ -39,7 +39,7 @@ public class MidiChooseScreen extends GameOptionsScreen implements IMidiScreen {
         MIDI_PLAYER_POOL = Executors.newSingleThreadExecutor(factory);
     }
 
-    private final IResourceManager resourceManager;
+    private final FileManager<?> resourceManager;
     private MidiListWidget midiFileListWidget;
 
     public MidiChooseScreen(Screen parent) {

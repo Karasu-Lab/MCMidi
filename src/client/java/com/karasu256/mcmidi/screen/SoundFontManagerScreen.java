@@ -6,7 +6,7 @@ import com.karasu256.mcmidi.config.ConfigManager;
 import com.karasu256.mcmidi.config.ModConfig;
 import com.karasu256.mcmidi.impl.IMidiPlayer;
 import com.karasu256.mcmidi.impl.IMidiScreen;
-import com.karasu256.mcmidi.impl.IResourceManager;
+import com.karasu256.mcmidi.api.FileManager;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;
@@ -29,7 +29,7 @@ import java.util.Optional;
 @Environment(EnvType.CLIENT)
 public class SoundFontManagerScreen extends GameOptionsScreen implements IMidiScreen {
     private final ModConfig config;
-    private final IResourceManager resourceManager;
+    private final FileManager<?> resourceManager;
     private SoundFontOptionListWidget soundFontOptionListWidget;
 
     public SoundFontManagerScreen(Screen parent) {

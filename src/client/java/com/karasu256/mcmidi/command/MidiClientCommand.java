@@ -3,7 +3,7 @@ package com.karasu256.mcmidi.command;
 import com.karasu256.karasunikilib.command.AbstractCommand;
 import com.karasu256.mcmidi.Constants;
 import com.karasu256.mcmidi.client.MidiPlayerState;
-import com.karasu256.mcmidi.impl.IResourceManager;
+import com.karasu256.mcmidi.api.FileManager;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;
@@ -43,7 +43,7 @@ public class MidiClientCommand extends AbstractCommand {
             return ClientCommandManager.literal(getName())
                     .then(ClientCommandManager.argument("file", StringArgumentType.greedyString())
                             .suggests((ctx, builder) -> {
-                                IResourceManager manager = MidiPlayerState.getInstance().getMidiManager();
+                                FileManager<?> manager = MidiPlayerState.getInstance().getMidiManager();
                                 List<String> files = manager.listLocalFiles();
                                 for (String file : files) {
                                     builder.suggest(file);
@@ -63,7 +63,7 @@ public class MidiClientCommand extends AbstractCommand {
 
             String filename = StringArgumentType.getString(context, "file");
             MidiPlayerState state = MidiPlayerState.getInstance();
-            IResourceManager manager = state.getMidiManager();
+            FileManager<?> manager = state.getMidiManager();
 
             try {
                 if (!manager.canLoad(filename)) {

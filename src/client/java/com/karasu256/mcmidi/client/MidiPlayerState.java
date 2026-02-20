@@ -1,18 +1,18 @@
 package com.karasu256.mcmidi.client;
 
 import com.karasu256.mcmidi.Constants;
-import com.karasu256.mcmidi.api.MidiFileManager;
-import com.karasu256.mcmidi.api.SoundFontFileManager;
+import com.karasu256.mcmidi.api.FileManager;
+import com.karasu256.mcmidi.api.MidiFileType;
+import com.karasu256.mcmidi.api.SoundFontFileType;
 import com.karasu256.mcmidi.api.midi.ExtendedMidi;
 import com.karasu256.mcmidi.impl.IMidiPlayer;
-import com.karasu256.mcmidi.impl.IResourceManager;
 import org.jetbrains.annotations.Nullable;
 
 public class MidiPlayerState {
     private static final MidiPlayerState INSTANCE = new MidiPlayerState();
 
-    private final IResourceManager midiManager = new MidiFileManager();
-    private final IResourceManager soundFontManager = new SoundFontFileManager();
+    private final FileManager<MidiFileType> midiManager = new FileManager<>(new MidiFileType());
+    private final FileManager<SoundFontFileType> soundFontManager = new FileManager<>(new SoundFontFileType());
     private @Nullable IMidiPlayer currentPlayer;
 
     private MidiPlayerState() {}
@@ -21,11 +21,11 @@ public class MidiPlayerState {
         return INSTANCE;
     }
 
-    public IResourceManager getMidiManager() {
+    public FileManager<MidiFileType> getMidiManager() {
         return midiManager;
     }
 
-    public IResourceManager getSoundFontManager() {
+    public FileManager<SoundFontFileType> getSoundFontManager() {
         return soundFontManager;
     }
 

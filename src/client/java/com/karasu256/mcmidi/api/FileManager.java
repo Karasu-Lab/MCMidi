@@ -1,7 +1,6 @@
 package com.karasu256.mcmidi.api;
 
-import com.karasu256.mcmidi.Constants;
-import com.karasu256.mcmidi.impl.IResourceManager;
+import com.karasu256.mcmidi.impl.IFileType;
 import net.minecraft.util.Util;
 
 import java.io.File;
@@ -11,14 +10,21 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class AbstractResourceManager implements IResourceManager {
+public class FileManager<T extends IFileType> {
+    private final T fileType;
 
-    @Override
-    public File getDirectoryFile() {
-        return new File(getDirectory());
+    public FileManager(T fileType) {
+        this.fileType = fileType;
     }
 
-    @Override
+    public T getFileType() {
+        return fileType;
+    }
+
+    public File getDirectoryFile() {
+        return new File(fileType.getDirectory());
+    }
+
     public void ensureDirectoryExists() {
         File dir = getDirectoryFile();
         if (!dir.exists()) {
@@ -26,18 +32,16 @@ public abstract class AbstractResourceManager implements IResourceManager {
         }
     }
 
-    @Override
     public void openDirectory() {
         ensureDirectoryExists();
         Util.getOperatingSystem().open(getDirectoryFile());
     }
 
-    @Override
     public List<String> listLocalFiles() {
         ensureDirectoryExists();
 
         List<String> result = new ArrayList<>();
-        String[] extensions = getExtensions();
+        String[] extensions = fileType.getExtensions();
         File[] files = getDirectoryFile().listFiles((dir, name) -> {
             for (String ext : extensions) {
                 if (name.endsWith(ext)) {
@@ -55,28 +59,25 @@ public abstract class AbstractResourceManager implements IResourceManager {
         return result;
     }
 
-    @Override
     public Optional<File> resolveFile(String filename) {
-        File file = new File(getDirectory() + "/" + filename);
+        File file = new File(fileType.getDirectory() + "/" + filename);
         if (file.exists()) {
             return Optional.of(file);
         }
         return Optional.empty();
     }
 
-    @Override
     public String toNormalizedPath(File file) {
         return file.getPath().replace("\\", "/");
     }
 
-    @Override
     public File createTempFile(byte[] data) throws IOException {
-        File tempFile = File.createTempFile(getDirectory(), getExtensions()[0]);
+        File tempFile = File.createTempFile(fileType.getDirectory(), fileType.getExtensions()[0]);
         Files.write(tempFile.toPath(), data);
         return tempFile;
     }
 
-    @Override
+    // Extension-agnostic binary loading
     public byte[] loadData(String identifier) throws IOException {
         Optional<File> file = resolveFile(identifier);
         if (file.isPresent()) {
@@ -85,7 +86,6 @@ public abstract class AbstractResourceManager implements IResourceManager {
         throw new IOException("File not found: " + identifier);
     }
 
-    @Override
     public boolean canLoad(String identifier) {
         return resolveFile(identifier).isPresent();
     }
