@@ -1,5 +1,12 @@
 # Changelog
 
+## [2.1.2](https://github.com/Karasu-Lab/MCMidi/compare/v2.1.1...v2.1.2) (2026-02-20)
+
+
+### Bug Fixes
+
+* fixed canLoad logic ([cc8a648](https://github.com/Karasu-Lab/MCMidi/commit/cc8a6481833a669713aacf8d6400e0a73242883c))
+
 ## [2.1.1](https://github.com/Karasu-Lab/MCMidi/compare/v2.1.0...v2.1.1) (2026-02-20)
 
 
