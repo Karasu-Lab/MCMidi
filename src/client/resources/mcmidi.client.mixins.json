@@ -1,6 +1,6 @@
 {
   "required": true,
-  "package": "karasu_lab.mcmidi.mixin.client",
+  "package": "com.karasu256.mcmidi.mixin.client",
   "compatibilityLevel": "JAVA_21",
   "client": [
     "GameMenuScreenMixin",
@@ -10,8 +10,5 @@
   ],
   "injectors": {
     "defaultRequire": 1
-  },
-  "mixins": [
-
-  ]
+  }
 }

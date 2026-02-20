@@ -13,19 +13,19 @@
 	},
 	"license": "MIT",
 	"icon": "assets/mcmidi/icon.png",
-	"environment": "*",
+	"environment": "client",
 	"entrypoints": {
 		"main": [
-			"karasu_lab.mcmidi.MCMidi"
+			"com.karasu256.mcmidi.MCMidi"
 		],
 		"client": [
-			"karasu_lab.mcmidi.MCMidiClient"
+			"com.karasu256.mcmidi.client.MCMidiClient"
 		],
 		"fabric-datagen": [
-			"karasu_lab.mcmidi.MCMidiDataGen"
+			"com.karasu256.mcmidi.MCMidiDataGen"
 		],
 		"modmenu": [
-			"karasu_lab.mcmidi.ModMenuIntegration"
+			"com.karasu256.mcmidi.client.MCMidiModMenuIntegration"
 		]
 	},
 	"mixins": [
