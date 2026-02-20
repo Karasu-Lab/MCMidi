@@ -15,4 +15,9 @@ public abstract class AbstractTabContent extends GridScreenTab implements ITabCo
     @Override
     public void refresh() {
     }
+
+    @Override
+    public ITabContent getContent() {
+        return this;
+    }
 }

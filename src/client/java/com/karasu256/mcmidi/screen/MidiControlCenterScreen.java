@@ -60,10 +60,10 @@ public class MidiControlCenterScreen extends Screen {
         PianoTab pianoTab = new PianoTab();
         WaveformTab waveformTab = new WaveformTab();
 
-        this.tabBar.addTab(detailTab, detailTab);
-        this.tabBar.addTab(nodesTab, nodesTab);
-        this.tabBar.addTab(pianoTab, pianoTab);
-        this.tabBar.addTab(waveformTab, waveformTab);
+        this.tabBar.addTab(detailTab, detailTab.getContent());
+        this.tabBar.addTab(nodesTab, nodesTab.getContent());
+        this.tabBar.addTab(pianoTab, pianoTab.getContent());
+        this.tabBar.addTab(waveformTab, waveformTab.getContent());
 
         ((TabBarWidget) this.tabBar).init(this.width, new ITabContent[]{detailTab, nodesTab, pianoTab, waveformTab});
         this.tabNavigation = ((TabBarWidget) this.tabBar).getNavigation();
