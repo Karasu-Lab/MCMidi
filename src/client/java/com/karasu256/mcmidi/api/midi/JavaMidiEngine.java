@@ -1,6 +1,10 @@
 package com.karasu256.mcmidi.api.midi;
 
 import com.karasu256.mcmidi.Constants;
+import com.karasu256.mcmidi.config.IConfigManager;
+import com.karasu256.mcmidi.impl.IFileType;
+import com.karasu256.mcmidi.client.MidiPlayerState;
+import com.karasu256.mcmidi.config.ConfigManager;
 import com.karasu256.mcmidi.config.ModConfig;
 
 import javax.sound.midi.*;

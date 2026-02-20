@@ -5,6 +5,8 @@ import com.karasu256.mcmidi.api.midi.IMidiEngine;
 import com.karasu256.mcmidi.api.midi.JavaMidiEngine;
 import com.karasu256.mcmidi.client.MidiPlayerState;
 import com.karasu256.mcmidi.screen.MidiControlCenterScreen;
+import com.karasu256.mcmidi.screen.widget.AbstractTabContent;
+import com.karasu256.mcmidi.screen.widget.ITabContent;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.widget.ClickableWidget;

@@ -4,7 +4,7 @@ import net.minecraft.client.gui.tab.Tab;
 import net.minecraft.client.gui.tab.TabManager;
 import net.minecraft.client.gui.widget.TabNavigationWidget;
 
-public class TabBarWidget extends AbstractTabBar<Tab> {
+public class TabBarWidget extends AbstractTabBar<ITabContent> {
     private final TabNavigationWidget navigation;
     private final TabManager tabManager;
 
@@ -14,7 +14,7 @@ public class TabBarWidget extends AbstractTabBar<Tab> {
     }
 
     @Override
-    public void addTab(Tab tab, ITabContent content) {
+    public void addTab(ITabContent tab, ITabContent content) {
         super.addTab(tab, content);
     }
 

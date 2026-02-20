@@ -5,6 +5,7 @@ import com.karasu256.mcmidi.api.FileManager;
 import com.karasu256.mcmidi.api.midi.IMidiEngine;
 import com.karasu256.mcmidi.api.midi.JavaMidiEngine;
 import com.karasu256.mcmidi.client.MidiPlayerState;
+import com.karasu256.mcmidi.config.ConfigManager;
 import com.karasu256.mcmidi.impl.IMidiScreen;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;

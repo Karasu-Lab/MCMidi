@@ -5,10 +5,8 @@ import com.karasu256.mcmidi.screen.ui.DetailTab;
 import com.karasu256.mcmidi.screen.ui.NodesTab;
 import com.karasu256.mcmidi.screen.ui.PianoTab;
 import com.karasu256.mcmidi.screen.ui.WaveformTab;
-import com.karasu256.mcmidi.screen.widget.IControlWidget;
-import com.karasu256.mcmidi.screen.widget.ITabBar;
-import com.karasu256.mcmidi.screen.widget.PlaybackControlWidget;
-import com.karasu256.mcmidi.screen.widget.TabBarWidget;
+import com.karasu256.mcmidi.screen.widget.*;
+import com.karasu256.mcmidi.config.ConfigManager;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.TextRenderer;
 import net.minecraft.client.gl.RenderPipelines;
@@ -37,7 +35,7 @@ public class MidiControlCenterScreen extends Screen {
     private final Screen parent;
     private final BiConsumer<MidiMessage, Long> midiListener = (message, time) -> this.onReceive(message);
     private TabNavigationWidget tabNavigation;
-    private ITabBar<Tab> tabBar;
+    private ITabBar<ITabContent> tabBar;
     private IControlWidget playbackControl;
     private PlaybackControlWidget playbackControlWidget;
 
