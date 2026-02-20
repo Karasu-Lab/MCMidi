@@ -9,9 +9,9 @@ public interface IMidiPlayer {
 
     void pause();
 
-    void setPosition(long position);
-
     long getPosition();
+
+    void setPosition(long position);
 
     long getLength();
 

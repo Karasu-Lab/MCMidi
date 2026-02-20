@@ -1,12 +1,12 @@
 package com.karasu256.mcmidi.screen;
 
 import com.karasu256.mcmidi.Constants;
+import com.karasu256.mcmidi.api.FileManager;
 import com.karasu256.mcmidi.client.MidiPlayerState;
 import com.karasu256.mcmidi.config.ConfigManager;
 import com.karasu256.mcmidi.config.ModConfig;
 import com.karasu256.mcmidi.impl.IMidiPlayer;
 import com.karasu256.mcmidi.impl.IMidiScreen;
-import com.karasu256.mcmidi.api.FileManager;
 import net.fabricmc.api.EnvType;
 import net.fabricmc.api.Environment;
 import net.minecraft.client.MinecraftClient;

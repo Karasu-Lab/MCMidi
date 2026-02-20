@@ -15,7 +15,8 @@ public class MidiPlayerState {
     private final FileManager<SoundFontFileType> soundFontManager = new FileManager<>(new SoundFontFileType());
     private @Nullable IMidiPlayer currentPlayer;
 
-    private MidiPlayerState() {}
+    private MidiPlayerState() {
+    }
 
     public static MidiPlayerState getInstance() {
         return INSTANCE;

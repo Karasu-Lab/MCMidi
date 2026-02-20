@@ -56,7 +56,8 @@ public class ExtendedMidi implements IMidiPlayer {
                     }
 
                     @Override
-                    public void close() {}
+                    public void close() {
+                    }
                 });
                 this.sequencer.getTransmitter().setReceiver(myReceiver);
             }
@@ -89,17 +90,17 @@ public class ExtendedMidi implements IMidiPlayer {
     }
 
     @Override
-    public void setPosition(long position) {
-        this.position = position;
-        this.sequencer.setMicrosecondPosition(this.position);
-    }
-
-    @Override
     public long getPosition() {
         if (this.sequencer.isOpen()) {
             return this.sequencer.getMicrosecondPosition();
         }
         return 0;
+    }
+
+    @Override
+    public void setPosition(long position) {
+        this.position = position;
+        this.sequencer.setMicrosecondPosition(this.position);
     }
 
     @Override
@@ -149,13 +150,13 @@ public class ExtendedMidi implements IMidiPlayer {
         }
     }
 
-    public void setDisplayName(@Nullable String name) {
-        this.displayName = name;
-    }
-
     @Nullable
     public String getDisplayName() {
         return displayName;
+    }
+
+    public void setDisplayName(@Nullable String name) {
+        this.displayName = name;
     }
 
     public Text getPlayingPath() {

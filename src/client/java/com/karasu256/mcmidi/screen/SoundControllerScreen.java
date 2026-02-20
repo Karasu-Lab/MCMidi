@@ -1,14 +1,14 @@
 package com.karasu256.mcmidi.screen;
 
+import com.karasu256.mcmidi.Constants;
+import com.karasu256.mcmidi.api.midi.ExtendedMidi;
 import com.karasu256.mcmidi.client.MidiPlayerState;
 import com.karasu256.mcmidi.impl.IMidiPlayer;
 import com.karasu256.mcmidi.impl.IMidiScreen;
-import com.karasu256.mcmidi.Constants;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.text.Text;
-import com.karasu256.mcmidi.api.midi.ExtendedMidi;
 
 public class SoundControllerScreen extends Screen implements IMidiScreen {
     private final Screen parent;

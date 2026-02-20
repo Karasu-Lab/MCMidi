@@ -1,6 +1,5 @@
 package com.karasu256.mcmidi.mixin.client;
 
-import com.karasu256.mcmidi.api.midi.ExtendedMidi;
 import com.karasu256.mcmidi.client.MidiPlayerState;
 import com.karasu256.mcmidi.impl.IMidiPlayer;
 import net.minecraft.client.gui.screen.Screen;

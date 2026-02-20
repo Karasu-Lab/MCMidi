@@ -10,16 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class FileManager<T extends IFileType> {
-    private final T fileType;
-
-    public FileManager(T fileType) {
-        this.fileType = fileType;
-    }
-
-    public T getFileType() {
-        return fileType;
-    }
+public record FileManager<T extends IFileType>(T fileType) {
 
     public File getDirectoryFile() {
         return new File(fileType.getDirectory());

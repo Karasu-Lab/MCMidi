@@ -1,9 +1,8 @@
 package com.karasu256.mcmidi.command;
 
 import com.karasu256.karasunikilib.command.AbstractCommand;
-import com.karasu256.mcmidi.Constants;
-import com.karasu256.mcmidi.client.MidiPlayerState;
 import com.karasu256.mcmidi.api.FileManager;
+import com.karasu256.mcmidi.client.MidiPlayerState;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.arguments.StringArgumentType;
 import com.mojang.brigadier.builder.ArgumentBuilder;

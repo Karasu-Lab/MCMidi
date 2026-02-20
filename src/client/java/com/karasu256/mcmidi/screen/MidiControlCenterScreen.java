@@ -28,7 +28,7 @@ public class MidiControlCenterScreen extends Screen {
 
     private final ThreePartsLayoutWidget layout = new ThreePartsLayoutWidget(this);
     private final TabManager tabManager = new TabManager(
-            element -> this.addDrawableChild((ClickableWidget) element),
+            element -> this.addDrawableChild(element),
             child -> this.remove(child)
     );
     private final Screen parent;

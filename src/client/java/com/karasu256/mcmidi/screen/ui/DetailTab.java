@@ -16,7 +16,6 @@ import net.minecraft.util.Colors;
 import javax.sound.midi.Instrument;
 import javax.sound.midi.MidiMessage;
 import javax.sound.midi.ShortMessage;
-import javax.sound.midi.Synthesizer;
 import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 import java.util.Map;
@@ -62,10 +61,21 @@ public class DetailTab extends GridScreenTab {
     }
 
     private record MidiNote(ShortMessage shortMessage) {
-        public int getStatus() { return shortMessage.getStatus(); }
-        public int getCommand() { return shortMessage.getCommand(); }
-        public int getData1() { return shortMessage.getData1(); }
-        public int getData2() { return shortMessage.getData2(); }
+        public int getStatus() {
+            return shortMessage.getStatus();
+        }
+
+        public int getCommand() {
+            return shortMessage.getCommand();
+        }
+
+        public int getData1() {
+            return shortMessage.getData1();
+        }
+
+        public int getData2() {
+            return shortMessage.getData2();
+        }
     }
 
     private class DetailRenderWidget extends ClickableWidget {
